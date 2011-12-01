@@ -1,0 +1,40 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           sbLocation
+    theme:                 aAdmin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sb_location_admin
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      
+      list:
+        title: Locations Admin
+        display: [ title, created_at, updated_at ]
+        
+      filter:  ~
+      form:    ~
+      
+      edit:
+        title: "Edit %%title%%"
+        display: 
+          Location Details: [ title, active, _descriptions ]
+          Contact Details: [ telephone_landline, telephone_mobile, website_url ]
+          Address: [ _address ]
+          Tags: [ tags ]
+          
+        
+      new:
+        title: Add Location
+        display: 
+          Location Details: [ title, active, _descriptions ]
+          Contact Details: [ telephone_landline, telephone_mobile, website_url ]
+          Address: [ _address ]
+          Tags: [ tags ]

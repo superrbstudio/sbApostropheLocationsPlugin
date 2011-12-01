@@ -1,0 +1,29 @@
+sbLocation:
+  SuperrbOffice:
+   active: true
+   title: Superrb Studio
+   description: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id malesuada nisl. Integer accumsan nulla quam. Sed elementum aliquam fermentum. Vivamus et magna mauris. Curabitur at eros sit amet tellus tempor facilisis. Integer congue tincidunt pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id sem leo. Integer vitae iaculis ligula. Ut et ante nibh. Ut eget nisl leo. Nulla aliquam rhoncus tortor, sed luctus lorem euismod ut.</p><p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc diam lacus, semper id scelerisque non, varius nec nisi. Pellentesque quis lectus sed orci mollis venenatis. Suspendisse ac libero ligula. Donec imperdiet felis sed arcu luctus ut cursus lacus pulvinar. Pellentesque odio libero, volutpat vel pharetra in, rhoncus eu risus. Praesent ultricies purus porttitor lacus tempus varius suscipit eros volutpat. Vivamus porttitor neque magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque congue tellus at nibh imperdiet eleifend. Quisque luctus dui id lacus tristique pellentesque. Aenean odio justo, elementum vel euismod a, ornare ut quam.</p>"
+   map_description: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id malesuada nisl. Integer accumsan nulla quam. Sed elementum aliquam fermentum. Vivamus et magna mauris. Curabitur at eros sit amet tellus tempor facilisis. Integer congue tincidunt pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id sem leo. Integer vitae iaculis ligula. Ut et ante nibh. Ut eget nisl leo. Nulla aliquam rhoncus tortor, sed luctus lorem euismod ut.</p><p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc diam lacus, semper id scelerisque non, varius nec nisi. Pellentesque quis lectus sed orci mollis venenatis. Suspendisse ac libero ligula. Donec imperdiet felis sed arcu luctus ut cursus lacus pulvinar. Pellentesque odio libero, volutpat vel pharetra in, rhoncus eu risus. Praesent ultricies purus porttitor lacus tempus varius suscipit eros volutpat. Vivamus porttitor neque magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque congue tellus at nibh imperdiet eleifend. Quisque luctus dui id lacus tristique pellentesque. Aenean odio justo, elementum vel euismod a, ornare ut quam.</p>"
+   address_line1: Suite 3
+   address_line2: 108-110 Elm Grove
+   address_town_city: Hayling Island
+   address_county: Hampshire
+   address_state: England
+   address_country: United Kingdom
+   address_postal_code: PO11 9EH
+   geocode_latitude: 50.79205560
+   geocode_longitude: -0.97700450
+   telephone_landline: 02392 637971
+   telephone_mobile: 07775 938391
+   website_url: http://www.superrb.com
+   Author: sgu_admin
+   Tags: [ office, studio ]
+
+sfGuardPermission:
+  sfGuardPermission_sb_locations_admin:
+    name: sb_location_admin
+    description: 'Locations Administrator'
+sfGuardGroupPermission:  
+  sfGuardGroupPermission_admin_sb_locations_admin:
+    Group: sfGuardGroup_admin
+    Permission: sfGuardPermission_sb_locations_admin

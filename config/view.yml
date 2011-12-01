@@ -1,0 +1,3 @@
+default:
+  stylesheets:
+    - /sbApostropheLocationsPlugin/css/sb-locations.css: { data-asset-group: global }

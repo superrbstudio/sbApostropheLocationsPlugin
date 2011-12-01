@@ -1,0 +1,98 @@
+options:
+  type: INNODB
+  
+# The location object
+sbLocation:
+  actAs:
+    Timestampable: ~
+    Taggable: ~
+    Sluggable:
+      unique: true
+      fields: [ title ]
+      canUpdate: false
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    author_id:
+      type: integer
+    active:
+      type: boolean
+      default: false
+      notnull: true
+    title:
+      unique: true
+      type: string(255)
+    description: 
+      type: clob
+    website_url:
+      type: string(255)
+    map_description:
+      type: clob
+    address_line1:
+      type: string(255)
+    address_line2:
+      type: string(255)
+    address_town_city:
+      type: string(255)
+    address_county:
+      type: string(255)
+    address_state:
+      type: string(255)
+    address_country:
+      type: string(255)
+    address_postal_code:
+      type: string(50)
+    geocode_latitude:
+      type: float
+      scale: 8
+    geocode_longitude:
+      type: float
+      scale: 8
+    telephone_landline:
+      type: string(100)
+    telephone_mobile:
+      type: string(100)
+  relations:
+    Author:
+      class: sfGuardUser
+      foreignAlias: JobAuthorItems
+      local: author_id
+      foreign: id
+      onDelete: SET NULL
+    aSearchDocuments:
+      class: aSearchDocument
+      refClass: sbLocationToASearchDocument
+      foreign: a_search_document_id
+      local: sb_location_id
+  indexes:
+    active: { fields: active }
+    author: { fields: author_id }
+    county: { fields: address_county }
+    state:  { fields: address_state }
+    country: { fields: address_country }
+
+# Link to a search document
+sbLocationToASearchDocument:
+  columns:
+    a_search_document_id:
+      type: integer
+    # Must be your table name followed by _id
+    sb_location_id:
+      type: integer
+  relations:
+    aSearchDocument:
+      local: a_search_document_id
+      foreign: id
+      class: aSearchDocument
+      onDelete: cascade
+    sbJobBoardJob:
+      local: sb_location_id
+      foreign: id
+      class: sbLocation
+      onDelete: cascade
+  options:
+    symfony:
+      form:   false
+      filter: false

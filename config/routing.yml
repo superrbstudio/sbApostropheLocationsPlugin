@@ -1,0 +1,13 @@
+sb_location_admin:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                sbLocation
+    module:               sbLocationsAdmin
+    prefix_path:          /admin/location
+    column:               id
+    with_wildcard_routes: true
+    
+sb_locations_lookup:
+  url: /sb-locations-lookup/:lookup/:address
+  params: { module: sbLocationsLookup, action: lookup }
+  requirements: { lookup: '[\w-]+' }

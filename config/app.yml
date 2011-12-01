@@ -1,0 +1,5 @@
+# Settings for the sbLocationsPlugin
+all:
+  sbLocations:
+    google_geocode_lookup_url: https://maps.googleapis.com/maps/api/geocode/json
+    google_geocode_sensor_usage: false

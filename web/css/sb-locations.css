@@ -1,0 +1,43 @@
+/* 
+    Document   : sb-locations
+    Created on : Dec 1, 2011, 5:42:50 PM
+    Author     : Giles Smith
+    Description:
+        Styles for sbApostropheLocationsPlugin
+*/
+
+.sbLocationsAdmin td.cke_contents {
+	width: 98%;
+}
+
+.sbLocationsAdmin td.cke_bottom {
+	display: none;
+}
+
+.sbLocationsAdmin table.sb-location-2-col .col1 {
+	padding-right: 5px;
+}
+
+.sbLocationsAdmin table.sb-location-2-col.address .col1 {
+	width: 66%;
+}
+
+.sbLocationsAdmin table.sb-location-2-col .col2 {
+	padding-left: 5px;
+}
+
+.sbLocationsAdmin table.sb-location-2-col.address .col2 {
+	width: 34%;
+}
+
+.sbLocationsAdmin input.large {
+	width: 400px;
+}
+
+.sbLocationsAdmin input.medium{
+	width: 300px;
+}
+
+.sbLocationsAdmin input.small {
+	width: 150px;
+}
