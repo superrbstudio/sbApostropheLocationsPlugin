@@ -55,11 +55,12 @@ abstract class PluginsbLocation extends BasesbLocation
 	 * Add in a co-ordinate lookup before saving
 	 */
 	public function preSave($obj)
-	{
-		parent::preSave($obj);
-		
+	{	
 		// set the geo co-ordinates if they haven't been set
-		if($this->getGeocodeLatitude() == '' or $this->getGeocodeLongitude() == '')
+		$testLat = $this->getGeocodeLatitude();
+		$testLon = $this->getGeocodeLongitude();
+		
+		if(empty($testLon) or !is_numeric($testLon) or empty($testLat) or !is_numeric($testLat))
 		{
 			$lookup = new sbLookupAddress(array('address' => $this->getAddress('comma'),
 																					'api_url' => sfConfig::get('app_sbLocations_google_geocode_lookup_url')));
@@ -70,6 +71,8 @@ abstract class PluginsbLocation extends BasesbLocation
 				$this->setGeocodeLatitude($lookup->getLatitude());
 			}
 		}
+		
+		parent::preSave($obj);
 	}
 	
 	/** 

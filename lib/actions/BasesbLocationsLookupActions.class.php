@@ -13,6 +13,9 @@ abstract class BasesbLocationsLookupActions extends BaseaActions
 				$lookup = new sbLookupAddress(array('address' => $request->getParameter('address'),
 																						'api_url' => sfConfig::get('app_sbLocations_google_geocode_lookup_url')));
 				
+				$success = 'REQUEST_DENIED';
+				$data    = array();
+				
 				if($lookup->lookupGeolocationFromAddress())
 				{
 					$success = 'OK';

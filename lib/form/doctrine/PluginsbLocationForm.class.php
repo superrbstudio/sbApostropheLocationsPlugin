@@ -43,6 +43,10 @@ abstract class PluginsbLocationForm extends BasesbLocationForm
 		
 		$this->setWidget('address_postal_code', new sfWidgetFormInputText(array(), array('class' => 'small')));
 		
+		// Geocode - dont need to validate it will be automatically populated if anything is wrong
+		$this->setWidget('geocode_latitude', new sfWidgetFormInputHidden(array('label' => 'Lat:'), array()));
+		$this->setWidget('geocode_longitude', new sfWidgetFormInputHidden(array('label' => 'Lon:'), array()));
+		
 		// Tags
 		$options['default'] = implode(', ', $this->getObject()->getTags());
 		if (sfConfig::get('app_a_all_tags', true))
@@ -59,5 +63,11 @@ abstract class PluginsbLocationForm extends BasesbLocationForm
 		$this->setValidator('tags', new sfValidatorString(array('required' => false)));
 		
 		unset($this['created_at'], $this['updated_at']);
+	}
+	
+	public function preUpdate($obj)
+	{
+		parent::preUpdate($obj);
+		die;
 	}
 }

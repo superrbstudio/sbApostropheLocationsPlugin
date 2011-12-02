@@ -61,21 +61,27 @@
 		</td>
 		<td class="col2">
 			
-			<div class="a-form-row a-admin-text">
-				<?php echo $form['geocode_latitude']->renderLabel(); ?>
-				<div class="a-form-field"><?php echo $form['geocode_latitude']->render(); ?></div>
-				<?php if($form['geocode_latitude']->hasError()): ?>
-				<div class="a-form-error"><?php echo $form['geocode_latitude']->renderError(); ?></div>
-				<?php endif; ?>
+			<div class="sb-location-coordinates a-form-row">
+				
+				<a href="#" class="a-btn a-sidebar-button a-save a-show-busy big sb-geocode-lookup">Find on map</a>
+				
+				<div class="coordinate-fields">
+					<div class="coordinate">
+						<?php echo $form['geocode_latitude']->renderLabel(); ?>
+						<span class="coordinate-value" id="geocode_latitude_value"></span>
+						<?php echo $form['geocode_latitude']->render(); ?>
+					</div>
+
+					<div class="coordinate">
+						<?php echo $form['geocode_longitude']->renderLabel(); ?>
+						<span class="coordinate-value" id="geocode_longitude_value"></span>
+						<?php echo $form['geocode_longitude']->render(); ?>
+					</div>
+				</div>
+				
 			</div>
 			
-			<div class="a-form-row a-admin-text">
-				<?php echo $form['geocode_longitude']->renderLabel(); ?>
-				<div class="a-form-field"><?php echo $form['geocode_longitude']->render(); ?></div>
-				<?php if($form['geocode_longitude']->hasError()): ?>
-				<div class="a-form-error"><?php echo $form['geocode_longitude']->renderError(); ?></div>
-				<?php endif; ?>
-			</div>
+			<div id="sb-location-admin-map"></div>
 			
 		</td>
 	</tr>

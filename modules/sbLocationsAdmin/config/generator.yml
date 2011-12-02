@@ -13,7 +13,9 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        geocode_latitude: { label: Lat }
+        geocode_longitude: { label: Lon }
       
       list:
         title: Locations Admin
