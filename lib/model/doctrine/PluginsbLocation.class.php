@@ -17,11 +17,7 @@ abstract class PluginsbLocation extends BasesbLocation
 		return $this->getTitle() . " " . 
 						$this->getDescription() . " " . 
 						$this->getMapDescription() . " " . 
-						$this->getAddressLine1() . " " . 
-						$this->getAddressLine2() . " " . 
-						$this->getAddressTownCity() . " " . 
-						$this->getAddressCounty() . " " . 
-						$this->getAddressPostalCode() . " " . 
+						$this->getAddress('comma') . " " . 
 						$this->getTelephoneLandline() . " " . 
 						$this->getTelephoneMobile() . " " . 
 						implode(' ', $this->getTags());
@@ -53,5 +49,57 @@ abstract class PluginsbLocation extends BasesbLocation
 				'item' => $this
 			)
 		);
+	}
+	
+	/**
+	 * Add in a co-ordinate lookup before saving
+	 */
+	public function preSave($obj)
+	{
+		parent::preSave($obj);
+		
+		// set the geo co-ordinates if they haven't been set
+		if($this->getGeocodeLatitude() == '' or $this->getGeocodeLongitude() == '')
+		{
+			$lookup = new sbLookupAddress(array('address' => $this->getAddress('comma'),
+																					'api_url' => sfConfig::get('app_sbLocations_google_geocode_lookup_url')));
+			
+			if($lookup->lookupGeolocationFromAddress())
+			{
+				$this->setGeocodeLongitude($lookup->getLongitude());
+				$this->setGeocodeLatitude($lookup->getLatitude());
+			}
+		}
+	}
+	
+	/** 
+	 * Formats the address
+	 * @param string $format [comma, newline, array]
+	 * @return mixed
+	 */
+	public function getAddress($format = 'array')
+	{
+		$address = array();
+		
+		if($this->getAddressLine1() != ''){ $address['line1'] = $this->getAddressLine1(); }
+		if($this->getAddressLine2() != ''){ $address['line2'] = $this->getAddressLine2(); }
+		if($this->getAddressTownCity() != ''){ $address['town_city'] = $this->getAddressTownCity(); }
+		if($this->getAddressCounty() != ''){ $address['county'] = $this->getAddressCounty(); }
+		if($this->getAddressState() != ''){ $address['state'] = $this->getAddressState(); }
+		if($this->getAddressCountry() != ''){ $address['country'] = $this->getAddressCountry(); }
+		if($this->getAddressPostalCode() != ''){ $address['postal_code'] = $this->getAddressPostalCode(); }
+		
+		switch($format)
+		{
+			case 'comma':
+				$address = implode(', ', $address);
+				break;
+			
+			case 'newline':
+				$address = implode('\r\n', $address);
+				break;
+		}
+		
+		return $address;
 	}
 }
