@@ -8,7 +8,7 @@ sbLocation:
     Taggable: ~
     Sluggable:
       unique: true
-      fields: [ title ]
+      fields: [ id, title ]
       canUpdate: false
   columns:
     id:
@@ -22,7 +22,6 @@ sbLocation:
       default: false
       notnull: true
     title:
-      unique: true
       type: string(255)
     description: 
       type: clob

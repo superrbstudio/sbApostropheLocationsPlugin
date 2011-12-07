@@ -86,3 +86,5 @@
 		</td>
 	</tr>
 </table>
+
+<?php a_js_call('sbLocationsSetupEditMap()') ?>

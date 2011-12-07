@@ -20,8 +20,16 @@ generator:
       list:
         title: Locations Admin
         display: [ title, created_at, updated_at ]
+        actions:
+          new:
+            label: New Location
+            action: new
+            params:
+              class: a-btn big icon a-add
         
-      filter:  ~
+      filter:  
+        fields:   [ title, active ]
+        display:  [ title, active ]
       form:    ~
       
       edit:

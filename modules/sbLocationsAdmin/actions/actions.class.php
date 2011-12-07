@@ -1,16 +1,14 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/sbLocationsAdminGeneratorConfiguration.class.php';
-require_once dirname(__FILE__).'/../lib/sbLocationsAdminGeneratorHelper.class.php';
+require_once dirname(__FILE__).'/../lib/BasesbLocationsAdminActions.class.php';
 
 /**
- * sbLocationsAdmin actions.
- *
- * @package    pmpmhotels
+ * sbLocationsAdminActions actions.
+ * 
+ * @package    sbApostropheLocationsPlugin
  * @subpackage sbLocationsAdmin
- * @author     Your name here
- * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @author     Giles Smith <tech@superrb.com>
  */
-class sbLocationsAdminActions extends autoSbLocationsAdminActions
+class sbLocationsAdminActions extends BasesbLocationsAdminActions
 {
 }
