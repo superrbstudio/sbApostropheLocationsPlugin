@@ -105,4 +105,19 @@ abstract class PluginsbLocation extends BasesbLocation
 		
 		return $address;
 	}
+	
+	public function getSlideShowName()
+	{
+		return $this->getModelName() . '-' . $this->getId();
+	}
+	
+	public function getSlideShowSlug()
+	{
+		return $this->getModelName() . '-' . $this->getId();
+	}
+	
+	public function getModelName()
+	{
+		return get_class($this);
+	}
 }

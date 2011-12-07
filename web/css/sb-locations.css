@@ -98,3 +98,7 @@
 .sb-locations-new-location {
 	z-index: 10;
 }
+
+#a-fieldset-photos {
+	margin-top: 50px;
+}

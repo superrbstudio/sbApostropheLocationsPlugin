@@ -93,7 +93,7 @@ function sbLocationsSubmitNewForm(form) {
 			window.location = data.redirect_url;
 		} else {
 			form.find('.a-act-as-submit').removeClass('a-busy');
-			alert('Something went wrong when creating your location');
+			alert('The location title can\'t be empty and must not have been used before');
 		}
 	});
 	return false;
@@ -130,4 +130,11 @@ function sbLocationsSetupEditMap() {
 	
 	// draw the map on load
 	sbLocationsDrawAdminMap();
+}
+
+function sbLocationsSetupFormChangeDetection() {
+	/* @TODO
+	 * This method should detect changes to the form and alert the user
+	 * if they try to navigate away or update images before saving.
+	 */
 }

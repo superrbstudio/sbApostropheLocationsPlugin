@@ -10,4 +10,8 @@
  */
 class sbLocationsAdminGeneratorHelper extends BaseSbLocationsAdminGeneratorHelper
 {
+  public function linkToSave($object, $params)
+  {
+    return '<li class="a-admin-action-save">' . a_anchor_submit_button(a_('Save', array(), 'apostrophe'), array('a-save'), '_save') . '</li>';
+  }
 }

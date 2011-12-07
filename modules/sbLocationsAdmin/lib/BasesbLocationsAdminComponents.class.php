@@ -13,4 +13,9 @@ abstract class BasesbLocationsAdminComponents extends sfComponents
   {
     $this->form = new sbLocationsNewLocationForm();
   }
+	
+	public function executePhotos()
+	{
+		
+	}
 }

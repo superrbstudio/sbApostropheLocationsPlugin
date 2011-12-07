@@ -9,7 +9,7 @@ sbLocation:
     address_town_city: Hayling Island
     address_county: Hampshire
     address_state: England
-    address_country: United Kingdom
+    address_country: GB
     address_postal_code: PO11 9EH
     telephone_landline: 02392 637971
     telephone_mobile: 07775 938391
@@ -25,7 +25,7 @@ sbLocation:
     address_town_city: Hayling Island
     address_county: Hampshire
     address_state: England
-    address_country: United Kingdom
+    address_country: GB
     address_postal_code: PO11 0DN
     telephone_mobile: 07775 938391
     website_url: http://www.superrb.com
@@ -40,7 +40,7 @@ sbLocation:
     address_town_city: Hayling Island
     address_county: Hampshire
     address_state: England
-    address_country: United Kingdom
+    address_country: GB
     address_postal_code: PO11 9SP
     telephone_mobile: 0123
     telephone_landline: 0123

@@ -3,15 +3,12 @@
 require_once dirname(__FILE__).'/../lib/sbLocationsAdminGeneratorConfiguration.class.php';
 require_once dirname(__FILE__).'/../lib/sbLocationsAdminGeneratorHelper.class.php';
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of BasesbLocationsAdminActions
- *
- * @author pureroon
+ * sbLocationsAdminActions actions.
+ * 
+ * @package    sbApostropheLocationsPlugin
+ * @subpackage sbLocationsAdmin
+ * @author     Giles Smith <tech@superrb.com>
  */
 class BasesbLocationsAdminActions extends autoSbLocationsAdminActions 
 {
