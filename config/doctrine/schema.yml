@@ -8,7 +8,7 @@ sbLocation:
     Taggable: ~
     Sluggable:
       unique: true
-      fields: [ id, title ]
+      fields: [ title ]
       canUpdate: false
   columns:
     id:
@@ -23,6 +23,7 @@ sbLocation:
       notnull: true
     title:
       type: string(255)
+      unique: true
     description: 
       type: clob
     website_url:
@@ -86,7 +87,7 @@ sbLocationToASearchDocument:
       foreign: id
       class: aSearchDocument
       onDelete: cascade
-    sbJobBoardJob:
+    sbLocation:
       local: sb_location_id
       foreign: id
       class: sbLocation

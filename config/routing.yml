@@ -3,7 +3,7 @@ sb_location_admin:
   options:
     model:                sbLocation
     module:               sbLocationsAdmin
-    prefix_path:          /admin/location
+    prefix_path:          /admin/sb-locations
     column:               id
     with_wildcard_routes: true
     collection_actions:

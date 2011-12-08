@@ -36,7 +36,7 @@
 }
 
 .sbLocationsAdmin table.sb-location-2-col.address .col2 {
-	width: 34%;
+	width: 350px;
 }
 
 .sbLocationsAdmin input.large {
@@ -81,7 +81,7 @@
 }
 
 #sb-location-admin-map {
-	width: 238px;
+	width: 350px;
 	height: 175px;
 	margin-bottom: 10px;
 	background-color: #EFEFEF;
@@ -101,4 +101,12 @@
 
 #a-fieldset-photos {
 	margin-top: 50px;
+}
+
+.sbLocationsAdmin .a-subnav-wrapper {
+	display: none;
+}
+
+.sbLocationsAdmin .a-content, .sbLocationsAdmin .a-admin-content, .sbLocationsAdmin .a-admin-footer {
+	width: 100%;
 }
