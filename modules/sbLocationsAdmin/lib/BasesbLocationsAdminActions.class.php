@@ -37,7 +37,7 @@ class BasesbLocationsAdminActions extends autoSbLocationsAdminActions
     }
 		else
 		{
-			$this->getResponse()->setContent(json_encode(array('status' => false, 'error' => array('Failed Validation'))));
+			$this->getResponse()->setContent(json_encode(array('status' => false, 'error' => array($this->form->renderGlobalErrors()))));
 		}
     
 		return sfView::NONE;

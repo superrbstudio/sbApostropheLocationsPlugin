@@ -13,10 +13,11 @@ abstract class PluginsbLocationForm extends BasesbLocationForm
 	public function setup()
 	{
 		parent::setup();
-		$user = sfContext::getInstance()->getUser();
 		sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
 		
 		$widgetOptions['tool'] = 'Sidebar';
+		
+		$this->setWidget('author_id', new sfWidgetFormInputHidden(array(), array()));
 		
 		$this->setWidget('title', new sfWidgetFormInputText(array(), array('class' => 'large')));
 		$this->setValidator('title', new sfValidatorString(array('required' => true), array('required' => 'Please enter a title for the location')));

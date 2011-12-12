@@ -57,7 +57,7 @@ sbLocation:
   relations:
     Author:
       class: sfGuardUser
-      foreignAlias: JobAuthorItems
+      foreignAlias: LocationAuthorItems
       local: author_id
       foreign: id
       onDelete: SET NULL

@@ -8,7 +8,6 @@ sb_location_admin:
     with_wildcard_routes: true
     collection_actions:
       new_with_title: post
-      update_all_fields: post
     
 sb_locations_lookup:
   url: /sb-locations-lookup/:lookup/:address
