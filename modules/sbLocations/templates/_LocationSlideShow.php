@@ -1,11 +1,11 @@
 <?php
 $dimensions = $params['dimensions'];
-a_slot($sbLocation->getSlideShowName(), 'aSlideshow', array("global" => true, 
-																													"slug" => $sbLocation->getSlideShowSlug(),
+a_slot(sbLocationTable::getSlideShowName($sbLocation), 'aSlideshow', array("global" => true, 
+																													"slug" => sbLocationTable::getSlideShowSlug($sbLocation),
 																													"width" => $dimensions['width'], 
 																													'height' => $dimensions['height'], 
 																													'resizeType' => 'c', 
-																													'flexHeight' => true, 
+																													'flexHeight' => false, 
 																													'class' => 'blog-post', 
-																													'constraints' => array($dimensions['width'], 'minimum-height' => $dimensions['height'])));
+																													'constraints' => array('minimum-width' => $dimensions['width'], 'minimum-height' => $dimensions['height'], 'aspect-width' => $dimensions['width'], 'aspect-height' => $dimensions['height'])));
 ?>

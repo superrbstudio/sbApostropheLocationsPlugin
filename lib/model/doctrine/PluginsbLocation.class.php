@@ -108,12 +108,12 @@ abstract class PluginsbLocation extends BasesbLocation
 	
 	public function getSlideShowName()
 	{
-		return $this->getModelName() . '-' . $this->getId();
+		return sbLocationTable::getSlideShowName($this);
 	}
 	
 	public function getSlideShowSlug()
 	{
-		return $this->getModelName() . '-' . $this->getId();
+		return sbLocationTable::getSlideShowSlug($this);
 	}
 	
 	public function getModelName()

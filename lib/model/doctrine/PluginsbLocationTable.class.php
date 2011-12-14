@@ -16,4 +16,14 @@ class PluginsbLocationTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('PluginsbLocation');
     }
+		
+		public static function getSlideShowName($location)
+		{
+			return  'sbLocation-' . $location['id'];
+		}
+		
+		public static function getSlideShowSlug($location)
+		{
+			return 'sbLocation-' . $location['id'];
+		}
 }
