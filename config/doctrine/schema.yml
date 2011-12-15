@@ -23,7 +23,6 @@ sbLocation:
       notnull: true
     title:
       type: string(255)
-      unique: true
     description: 
       type: clob
     website_url:
