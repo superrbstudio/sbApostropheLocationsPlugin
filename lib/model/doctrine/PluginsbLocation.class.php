@@ -120,4 +120,9 @@ abstract class PluginsbLocation extends BasesbLocation
 	{
 		return get_class($this);
 	}
+	
+	public function getFirstImage()
+	{
+		return sbLocationTable::getFirstImage($this);
+	}
 }

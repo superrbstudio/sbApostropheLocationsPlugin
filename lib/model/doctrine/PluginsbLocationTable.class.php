@@ -7,23 +7,36 @@
  */
 class PluginsbLocationTable extends Doctrine_Table
 {
-    /**
-     * Returns an instance of this class.
-     *
-     * @return object PluginsbLocationTable
-     */
-    public static function getInstance()
-    {
-        return Doctrine_Core::getTable('PluginsbLocation');
-    }
-		
-		public static function getSlideShowName($location)
+	/**
+		* Returns an instance of this class.
+		*
+		* @return object PluginsbLocationTable
+		*/
+	public static function getInstance()
+	{
+			return Doctrine_Core::getTable('PluginsbLocation');
+	}
+
+	public static function getSlideShowName($location)
+	{
+		return  'sbLocation-' . $location['id'];
+	}
+
+	public static function getSlideShowSlug($location)
+	{
+		return 'sbLocation-' . $location['id'];
+	}
+
+	public static function getFirstImage($location)
+	{
+		$page = aPageTable::retrieveBySlugWithSlots(self::getSlideShowSlug($location));
+		$images = $page->getSlot(self::getSlideShowName($location))->getOrderedMediaItems();
+
+		if($images)
 		{
-			return  'sbLocation-' . $location['id'];
+			return $images[0];
 		}
-		
-		public static function getSlideShowSlug($location)
-		{
-			return 'sbLocation-' . $location['id'];
-		}
+
+		return false;
+	}
 }
