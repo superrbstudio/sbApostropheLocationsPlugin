@@ -1,2 +1,1 @@
-<h2>Photos for <?php echo $location->getTitle(); ?></h2>
-<p>Please make sure that you have saved all of your location details before choosing the photos.</p>
+<h1>Photos for <?php echo $location->getTitle(); ?> <span class="error">(Save all of your location details before choosing the photos.)</span></h1>

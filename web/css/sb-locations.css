@@ -103,6 +103,15 @@
 	margin-top: 50px;
 }
 
+#a-fieldset-photos h1 {
+	font-size: 1.6em;
+}
+
+#a-fieldset-photos h1 .error {
+	color: #ff0000;
+	font-weight: bold;
+}
+
 .sbLocationsAdmin .a-subnav-wrapper {
 	display: none;
 }
