@@ -30,13 +30,18 @@ class PluginsbLocationTable extends Doctrine_Table
 	public static function getFirstImage($location)
 	{
 		$page = aPageTable::retrieveBySlugWithSlots(self::getSlideShowSlug($location));
-		$images = $page->getSlot(self::getSlideShowName($location))->getOrderedMediaItems();
-
-		if($images)
+		$slot = $page->getSlot(self::getSlideShowName($location));
+		
+		if($slot)
 		{
-			return $images[0];
+			$images = $slot->getOrderedMediaItems();
+			
+			if($images)
+			{
+				return $images[0];
+			}
 		}
-
+			
 		return false;
 	}
 }
