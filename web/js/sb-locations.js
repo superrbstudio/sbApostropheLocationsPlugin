@@ -101,24 +101,48 @@ function sbLocationsSubmitNewForm(form) {
 
 function sbLocationsSetupEditMap() {
 	var addressLookup = '//' + window.location.hostname + '/sb-locations-lookup/address';
-	sbLocationsSetLatLonDisplayValues();
+	//sbLocationsSetLatLonDisplayValues();
 	
 	// get geocode lookup
 	$('.sb-geocode-lookup').click(function() {
-		address = $('#sb_location_address_line1').val() + ", " +
-							$('#sb_location_address_line2').val() + ", " +
-							$('#sb_location_address_town_city').val() + ", " +
-							$('#sb_location_address_county').val() + ", " +
-							$('#sb_location_address_state').val() + ", " +
-							$('#sb_location_address_country').val() + ", " +
-							$('#sb_location_address_postal_code').val();
+		address = '';
+		
+		if($('#sb_location_address_line1').val() != '') {
+			address = address + ', ' + $('#sb_location_address_line1').val();
+		}
+		
+		if($('#sb_location_address_line2').val() != '') {
+			address = address + ', ' + $('#sb_location_address_line2').val();
+		}
+		
+		if($('#sb_location_address_town_city').val() != '') {
+			address = address + ', ' + $('#sb_location_address_town_city').val();
+		}
+		
+		if($('#sb_location_address_county').val() != '') {
+			address = address + ', ' + $('#sb_location_address_county').val();
+		}
+		
+		if($('#sb_location_address_state').val() != '') {
+			address = address + ', ' + $('#sb_location_address_state').val();
+		}
+		
+		if($('#sb_location_address_postal_code').val() != '') {
+			address = address + ', ' + $('#sb_location_address_postal_code').val();
+		}
+		
+		if($('#sb_location_address_country').val() != '') {
+			address = address + ', ' + $('#sb_location_address_country').val();
+		}
 						
 		$.getJSON(addressLookup + '/' + encodeURIComponent(address), function(data){
 			if(data.status == 'OK') {
 				$('#sb_location_geocode_latitude').val(parseFloat(data.results.latitude));
 				$('#sb_location_geocode_longitude').val(parseFloat(data.results.longitude));
-				sbLocationsSetLatLonDisplayValues();
+				//sbLocationsSetLatLonDisplayValues();
 				sbLocationsDrawAdminMap();
+			} else {
+				alert('Unable to find address');
 			}
 			
 			$('.sb-geocode-lookup').removeClass('a-busy');

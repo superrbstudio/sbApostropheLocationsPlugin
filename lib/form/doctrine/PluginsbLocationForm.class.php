@@ -52,8 +52,8 @@ abstract class PluginsbLocationForm extends BasesbLocationForm
 		$this->setValidator('address_postal_code', new sfValidatorString(array('required' => false)));
 		
 		// Geocode - dont need to validate it will be automatically populated if anything is wrong
-		$this->setWidget('geocode_latitude', new sfWidgetFormInputHidden(array('label' => 'Lat:'), array()));
-		$this->setWidget('geocode_longitude', new sfWidgetFormInputHidden(array('label' => 'Lon:'), array()));
+		$this->setWidget('geocode_latitude', new sfWidgetFormInputText(array('label' => 'Lat:'), array()));
+		$this->setWidget('geocode_longitude', new sfWidgetFormInputText(array('label' => 'Lon:'), array()));
 		
 		// Tags
 		$options['default'] = implode(', ', $this->getObject()->getTags());

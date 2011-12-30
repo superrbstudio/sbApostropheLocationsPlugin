@@ -89,8 +89,8 @@ abstract class PluginsbLocation extends BasesbLocation
 		if($this->getAddressTownCity() != ''){ $address['town_city'] = $this->getAddressTownCity(); }
 		if($this->getAddressCounty() != ''){ $address['county'] = $this->getAddressCounty(); }
 		if($this->getAddressState() != ''){ $address['state'] = $this->getAddressState(); }
-		if($this->getAddressCountry() != ''){ $address['country'] = $this->getAddressCountry(); }
 		if($this->getAddressPostalCode() != ''){ $address['postal_code'] = $this->getAddressPostalCode(); }
+		if($this->getAddressCountry() != ''){ $address['country'] = $this->getAddressCountry(); }
 		
 		switch($format)
 		{
