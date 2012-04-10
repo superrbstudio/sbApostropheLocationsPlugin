@@ -38,7 +38,7 @@ class PluginsbLocationTable extends Doctrine_Table
 			
 			if($images)
 			{
-				return $images[0];
+				return $images[0]->getCropOriginal();
 			}
 		}
 			
