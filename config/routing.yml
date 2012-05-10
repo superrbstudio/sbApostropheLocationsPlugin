@@ -13,3 +13,15 @@ sb_locations_lookup:
   url: /sb-locations-lookup/:lookup/:address
   params: { module: sbLocationsLookup, action: lookup }
   requirements: { lookup: '[\w-]+' }
+  
+sb_locations:
+  url: /
+  param: { module: sbLocations, action: index }
+  class: aRoute
+  
+sb_location:
+  url: /:slug
+  param: { module: sbLocations, action: location }
+  options: { model: sbLocation, type: object }
+  class: aDoctrineRoute
+  requirements: { slug: '[\w-]+' }

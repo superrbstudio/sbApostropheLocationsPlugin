@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/BasesbLocationsActions.class.php';
-
 /**
  * sbLocationsActions actions.
  * 
@@ -9,6 +7,6 @@ require_once dirname(__FILE__).'/../lib/BasesbLocationsActions.class.php';
  * @subpackage sbLocations
  * @author     Giles Smith <tech@superrb.com>
  */
-class sbLocationsActions extends BasesbLocationsActions
+class sbLocationsActions extends PluginsbLocationsActions
 {
 }

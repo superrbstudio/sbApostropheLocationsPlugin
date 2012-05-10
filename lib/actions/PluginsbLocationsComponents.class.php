@@ -1,15 +1,18 @@
 <?php
 
-/**
- * BasesbLocationsComponents components.
- * 
- * @package    sbApostropheLocationsPlugin
- * @subpackage sbLocations
- * @author     Giles Smith <tech@superrb.com>
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
-abstract class BasesbLocationsComponents extends sfComponents
+
+/**
+ * Description of PluginsbLocationsComponents
+ *
+ * @author pureroon
+ */
+abstract class PluginsbLocationsComponents extends sfComponents 
 {
-	public function executeLocationSlideShow(sfWebRequest $request)
+  public function executeLocationSlideShow(sfWebRequest $request)
 	{
 		$defaults = array('class' => 'sb-location-main',
 											'dimensions' => sfConfig::get('app_sbLocations_slideshow', array('width' => 600, 'height' => 400)));

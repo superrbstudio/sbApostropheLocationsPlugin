@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/BasesbLocationsComponents.class.php';
-
 /**
  * sbLocationsComponents components.
  * 
@@ -9,7 +7,6 @@ require_once dirname(__FILE__).'/../lib/BasesbLocationsComponents.class.php';
  * @subpackage sbLocations
  * @author     Giles Smith <tech@superrb.com>
  */
-class sbLocationsComponents extends BasesbLocationsComponents
-{
-  
+class sbLocationsComponents extends PluginsbLocationsComponents
+{ 
 }

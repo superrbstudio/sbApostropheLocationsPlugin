@@ -30,18 +30,39 @@ class PluginsbLocationTable extends Doctrine_Table
 	public static function getFirstImage($location)
 	{
 		$page = aPageTable::retrieveBySlugWithSlots(self::getSlideShowSlug($location));
-		$slot = $page->getSlot(self::getSlideShowName($location));
-		
-		if($slot)
-		{
-			$images = $slot->getOrderedMediaItems();
-			
-			if($images)
-			{
-				return $images[0]->getCropOriginal();
-			}
-		}
+    
+    if($page)
+    {
+      $slot = $page->getSlot(self::getSlideShowName($location));
+
+      if($slot)
+      {
+        $images = $slot->getOrderedMediaItems();
+
+        if($images)
+        {
+          return $images[0]->getCropOriginal();
+        }
+      }
+    }
 			
 		return false;
 	}
+  
+  public static function listLocations($params = array())
+  {
+    $result = Doctrine_Query::create()->from('sbLocation AS l')->leftJoin('l.sbVacancy AS v');
+    
+    if(isset($params['order_by']))
+    {
+      $result->orderBy($params['order_by']);
+    }
+    else
+    {
+      $result->orderBy('l.updated_at DESC');
+    }
+    
+    $fast = sfConfig::get('app_a_fasthydrate', false);
+    return $result->execute();
+  }
 }
