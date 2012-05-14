@@ -42,6 +42,10 @@ class BasesbLocationsAdminActions extends autoSbLocationsAdminActions
     
 		return sfView::NONE;
   }
+  
+  public function executeEdit(sfWebRequest $request)
+  {
+    $this->getResponse()->addJavascript('https://maps.google.com/maps/api/js?sensor=false');
+    return parent::executeEdit($request);
+  }
 }
-
-?>

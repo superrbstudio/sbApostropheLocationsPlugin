@@ -44,6 +44,7 @@ abstract class PluginsbLocationsLookupActions extends BaseaActions
     $this->getResponse()->setHttpHeader('Content-Type','application/json; charset=utf-8');
     
     $locations = sbLocationTable::getInstance()->findByActive(true);
+    $icons = sfConfig::get('app_sbLocations_maps_icons');
     
     foreach($locations as $location)
     {
@@ -52,8 +53,8 @@ abstract class PluginsbLocationsLookupActions extends BaseaActions
                   'description' => $this->getPartial('sbLocations/mapDescription', array('location' => $location)),
                   'lat' => $location['geocode_latitude'], 
                   'lng' => $location['geocode_longitude'],
-                  'icon' => sfConfig::get('app_sbLocations_icon'), 
-                  'shadow' => sfConfig::get('app_sbLocations_shadow'));
+                  'icon' => $icons['icon'], 
+                  'shadow' => $icons['shadow']);
       
       $data[] = $da;
     }
