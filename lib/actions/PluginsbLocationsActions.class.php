@@ -15,6 +15,8 @@ abstract class PluginsbLocationsActions extends aEngineActions
   
   public function executeLocation(sfWebRequest $request)
   {
-    
+    $this->location = sbLocationTable::getInstance()->findOneBySlug($request->getParameter('slug'));
+    $this->forward404Unless($this->location instanceof sbLocation);
+    $this->forward404Unless($this->location->getActive() == true);
   }
 }
