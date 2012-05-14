@@ -20,4 +20,10 @@ abstract class PluginsbLocationsComponents extends sfComponents
 		if(!is_array($this->params)){ $this->params = array(); }
 		$this->params     = array_merge($defaults, $this->params);
 	}
+  
+  public function executeDisplayMap(sfWebRequest $request)
+  {
+    sfContext::getInstance()->getResponse()->addJavascript('https://maps.google.com/maps/api/js?sensor=false');
+    $this->markersUrl = url_for('@sb_locations_map_list');
+  }
 }

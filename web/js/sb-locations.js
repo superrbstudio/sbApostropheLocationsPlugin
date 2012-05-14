@@ -162,3 +162,58 @@ function sbLocationsSetupFormChangeDetection() {
 	 * if they try to navigate away or update images before saving.
 	 */
 }
+
+function sbLocationsLoadMap(markersUrl) {
+  
+  var map,alliw = new Array(),default_zoom = 7,ctr;
+  var load_places = function(url, id){
+    $.getJSON(url, function(data) {
+      var n = 1;
+      var bounds = new google.maps.LatLngBounds();
+      var myLatLng = null;
+      $.each(data, function(k, e) {
+        myLatLng = new google.maps.LatLng(e.lat,e.lng);
+        bounds.extend(myLatLng);
+        
+        var im = new google.maps.MarkerImage(e.icon.url,
+          new google.maps.Size(e.icon.size.one, e.icon.size.two),
+          new google.maps.Point(e.icon.point1.one, e.icon.point1.two),
+          new google.maps.Point(e.icon.point2.one, e.icon.point2.two)
+        );
+
+        var shadow = new google.maps.MarkerImage(e.shadow.url,
+          new google.maps.Size(e.shadow.size.one, e.shadow.size.two),
+          new google.maps.Point(e.shadow.point1.one, e.shadow.point1.two),
+          new google.maps.Point(e.shadow.point2.one, e.shadow.point2.two)
+        );
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            icon: im,
+            shadow: shadow,
+            title : e.name,
+            zIndex : n
+        });
+
+        var infowindow = new google.maps.InfoWindow({
+          content: e.description
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+        n++;
+      });
+        
+      map.fitBounds(bounds);
+    });
+  }
+  
+  map = new google.maps.Map(document.getElementById('sb-locations-map-container'),{
+		mapTypeId : google.maps.MapTypeId.ROADMAP,
+    zoom: 7
+	});
+
+	load_places(markersUrl);
+}

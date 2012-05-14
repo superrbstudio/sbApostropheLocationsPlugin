@@ -14,14 +14,18 @@ sb_locations_lookup:
   params: { module: sbLocationsLookup, action: lookup }
   requirements: { lookup: '[\w-]+' }
   
+sb_locations_map_list:
+  url: /sb-locations-map-list
+  params: { module: sbLocationsLookup, action: mapList }
+  
 sb_locations:
   url: /
-  param: { module: sbLocations, action: index }
+  params: { module: sbLocations, action: index }
   class: aRoute
   
 sb_location:
   url: /:slug
-  param: { module: sbLocations, action: location }
+  params: { module: sbLocations, action: location }
   options: { model: sbLocation, type: object }
   class: aDoctrineRoute
   requirements: { slug: '[\w-]+' }

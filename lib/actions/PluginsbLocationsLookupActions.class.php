@@ -1,6 +1,6 @@
 <?php
 
-abstract class BasesbLocationsLookupActions extends BaseaActions
+abstract class PluginsbLocationsLookupActions extends BaseaActions
 {
 	public function executeLookup(sfWebRequest $request)
 	{
@@ -37,4 +37,28 @@ abstract class BasesbLocationsLookupActions extends BaseaActions
 		$this->getResponse()->setContent(json_encode(array('results' => $data, 'status' => $success)));
 		return sfView::NONE;
 	}
+  
+  public function executeMapList(sfWebRequest $request)
+  {
+    $data = array();
+    $this->getResponse()->setHttpHeader('Content-Type','application/json; charset=utf-8');
+    
+    $locations = sbLocationTable::getInstance()->findByActive(true);
+    
+    foreach($locations as $location)
+    {
+      $da = array('id' => $location['id'],
+                  'name' => $location['address_line1'], 
+                  'description' => $this->getPartial('sbLocations/mapDescription', array('location' => $location)),
+                  'lat' => $location['geocode_latitude'], 
+                  'lng' => $location['geocode_longitude'],
+                  'icon' => sfConfig::get('app_sbLocations_icon'), 
+                  'shadow' => sfConfig::get('app_sbLocations_shadow'));
+      
+      $data[] = $da;
+    }
+    
+    $this->getResponse()->setContent(json_encode($data));
+		return sfView::NONE;
+  }
 }
