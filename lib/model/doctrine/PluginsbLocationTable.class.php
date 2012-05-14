@@ -53,6 +53,11 @@ class PluginsbLocationTable extends Doctrine_Table
   {
     $result = Doctrine_Query::create()->from('sbLocation AS l')->leftJoin('l.sbVacancy AS v');
     
+    if(isset($params['active']))
+    {
+      $result->andWhere('active = ?', $params['active']);
+    }
+    
     if(isset($params['order_by']))
     {
       $result->orderBy($params['order_by']);
