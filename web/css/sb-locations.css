@@ -10,6 +10,10 @@
 	background-position: -20px -1400px;
 }
 
+.sbLocationsAdmin .a-home > .icon {
+  background-position: -20px -1740px;
+}
+
 .sbLocationsAdmin td.cke_contents {
 	width: 98%;
 }
