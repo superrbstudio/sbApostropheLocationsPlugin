@@ -5,6 +5,29 @@ all:
 		slideshow:
       width: 600
       height: 400
+    maps_icons:
+      icon:
+        url: "/images/map-marker.png"
+        size: 
+          one: 37
+          two: 47
+        point1:
+          one: 0
+          two: 0
+        point2:
+          one: 19
+          two: 47
+      shadow:
+        url: "/images/map-marker-shadow.png"
+        size:
+          one: 65
+          two: 47
+        point1:
+          one: 0
+          two: 0
+        point2:
+          one: 19
+          two: 47
     
   a:
     cache_clear_list: [ sb_lookup_address ]
