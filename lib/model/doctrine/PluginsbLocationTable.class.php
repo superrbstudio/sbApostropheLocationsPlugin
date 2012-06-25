@@ -51,7 +51,7 @@ class PluginsbLocationTable extends Doctrine_Table
   
   public static function listLocations($params = array())
   {
-    $result = Doctrine_Query::create()->from('sbLocation AS l')->leftJoin('l.sbVacancy AS v');
+    $result = Doctrine_Query::create()->from('sbLocation AS l');
     
     if(isset($params['active']))
     {
