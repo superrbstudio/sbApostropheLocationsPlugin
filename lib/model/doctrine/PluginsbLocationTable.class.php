@@ -51,7 +51,7 @@ class PluginsbLocationTable extends Doctrine_Table
   
   public static function listLocations($params = array())
   {
-    $result = Doctrine_Query::create()->from('sbLocation AS l')->leftJoin('l.sbVacancy AS v');
+    $result = Doctrine_Query::create()->from('sbLocation AS l');
     
     if(isset($params['active']))
     {
@@ -70,4 +70,22 @@ class PluginsbLocationTable extends Doctrine_Table
     $fast = sfConfig::get('app_a_fasthydrate', false);
     return $result->execute();
   }
+  
+  /**
+	 * Returns an array of sbGoogleSitemapPage objects for use by the google sitemap plugin
+	 * @return array
+	 */
+	public static function pagesForSitemap()
+	{
+		sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+		$return    = array();
+		$locations = self::listLocations(array('active' => true));
+
+		foreach($locations as $location)
+		{
+			$return[] = new sbGoogleSitemapPage(sfContext::getInstance()->getRequest()->getHost(), url_for('@sb_location?slug=' . $location['slug']), false, 'monthly', 0.8, strtotime($location['updated_at']));
+		}
+
+		return $return;
+	}
 }
