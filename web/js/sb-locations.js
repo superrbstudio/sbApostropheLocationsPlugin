@@ -1,31 +1,87 @@
-function sbLocationsDrawAdminMap() {
+
+var sbOpenStreetMapAdminMap;
+var sbOpenStreetMapAdminMarkers;
+
+function sbLocationsDrawAdminMap(mapSystem) {
 	if($('#sb-location-admin-map').length == 0) {return false;}
-
-	lat = parseFloat($('#sb_location_geocode_latitude').val());
-	lon = parseFloat($('#sb_location_geocode_longitude').val());
+	
+	// do we use Google Maps or Open Street Maps
+	if(mapSystem == undefined) { mapSystem = 'sbGoogleMap'; }
+  
+  // get the co-ordinates
+  lat = parseFloat($('#sb_location_geocode_latitude').val());
+  lon = parseFloat($('#sb_location_geocode_longitude').val());
 	if(isNaN(lat) || isNaN(lon)) {return false;}
-
-	ctr = new google.maps.LatLng(lat, lon);
-	map = new google.maps.Map(document.getElementById('sb-location-admin-map'),{
-		zoom : 13,
-		center : ctr,
-		mapTypeId : google.maps.MapTypeId.ROADMAP,
-		disableDefaultUI : false,
-		navigationControl : false,
-		navigationControlOptions : {
-			style : google.maps.NavigationControlStyle.SMALL
-		}
-	});
-
-	var myLatLng = new google.maps.LatLng(lat,lon);
-
-	var marker = new google.maps.Marker({
-			position: myLatLng,
-			map: map
-	});
-
-	return true;
+	
+	if(mapSystem == 'sbGoogleMap') {
+		ctr = new google.maps.LatLng(lat, lon);
+		map = new google.maps.Map(document.getElementById('sb-location-admin-map'),{
+			zoom : 13,
+			center : ctr,
+			mapTypeId : google.maps.MapTypeId.ROADMAP,
+			disableDefaultUI : false,
+			navigationControl : false,
+			navigationControlOptions : {
+				style : google.maps.NavigationControlStyle.SMALL
+			}
+		});
+	
+		var myLatLng = new google.maps.LatLng(lat,lon);
+	
+		var marker = new google.maps.Marker({
+				position: myLatLng,
+				map: map
+		});
+	
+		return true;
+	}
+  
+  if(mapSystem == 'sbOpenStreetMap') {
+    
+    // set up or find the map
+    if(sbOpenStreetMapAdminMap == undefined) { 
+      sbOpenStreetMapAdminMap = new OpenLayers.Map("sb-location-admin-map");
+      sbOpenStreetMapAdminMap.addLayer(new OpenLayers.Layer.OSM());
+    }
+    
+    // set up or find the markers
+    if(sbOpenStreetMapAdminMarkers == undefined) {
+      sbOpenStreetMapAdminMarkers = new OpenLayers.Layer.Markers("Markers");
+      sbOpenStreetMapAdminMap.addLayer(sbOpenStreetMapAdminMarkers);
+    } else {
+      sbOpenStreetMapAdminMarkers.destroy();
+      sbOpenStreetMapAdminMarkers = new OpenLayers.Layer.Markers("Markers");
+      sbOpenStreetMapAdminMap.addLayer(sbOpenStreetMapAdminMarkers);
+      sbOpenStreetMapAdminMarkers.redraw();
+    }
+    
+    // draw marker on map
+    var size = new OpenLayers.Size(21,25);
+    var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+    var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png',size,offset);
+    sbOpenStreetMapAdminMarkers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(lon,lat)
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            sbOpenStreetMapAdminMap.getProjectionObject() // to Spherical Mercator Projection
+          ),icon));
+ 
+    //Set start centrepoint and zoom    
+    var lonLat = new OpenLayers.LonLat(lon,lat)
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            sbOpenStreetMapAdminMap.getProjectionObject() // to Spherical Mercator Projection
+          );
+    var zoom=13;
+    sbOpenStreetMapAdminMap.setCenter (lonLat, zoom);
+    
+    $('#sb-location-admin-map .olControlAttribution').css('display', 'none');
+    
+    return true;
+  }
+  
+  return true;
 }
+    
 
 function sbLocationsSetLatLonDisplayValues() {
 	lat = parseFloat($('#sb_location_geocode_latitude').val());
@@ -99,7 +155,7 @@ function sbLocationsSubmitNewForm(form) {
 	return false;
 }
 
-function sbLocationsSetupEditMap() {
+function sbLocationsSetupEditMap(mapSystem) {
 	var addressLookup = '//' + window.location.hostname + '/sb-locations-lookup/address';
 	//sbLocationsSetLatLonDisplayValues();
 	
@@ -140,7 +196,7 @@ function sbLocationsSetupEditMap() {
 				$('#sb_location_geocode_latitude').val(parseFloat(data.results.latitude));
 				$('#sb_location_geocode_longitude').val(parseFloat(data.results.longitude));
 				//sbLocationsSetLatLonDisplayValues();
-				sbLocationsDrawAdminMap();
+				sbLocationsDrawAdminMap(mapSystem);
 			} else {
 				alert('Unable to find address');
 			}
@@ -153,7 +209,7 @@ function sbLocationsSetupEditMap() {
 	});
 	
 	// draw the map on load
-	sbLocationsDrawAdminMap();
+	sbLocationsDrawAdminMap(mapSystem);
 }
 
 function sbLocationsSetupFormChangeDetection() {

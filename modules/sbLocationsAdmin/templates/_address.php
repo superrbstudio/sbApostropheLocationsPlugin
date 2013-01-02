@@ -87,4 +87,4 @@
 	</tr>
 </table>
 
-<?php a_js_call('sbLocationsSetupEditMap()') ?>
+<?php a_js_call('sbLocationsSetupEditMap(?)', sfConfig::get('app_sbLocations_map_system')) ?>

@@ -32,7 +32,7 @@ class sbApostropheLocationsPluginConfiguration extends sfPluginConfiguration
   {
     $user = sfContext::getInstance()->getUser();
  
-    if ($user->hasCredential('sb_location_admin'))
+    if ($user->hasCredential('sb_location_admin') or $user->hasCredential('admin'))
     {
       aTools::addGlobalButtons(array(
         new aGlobalButton('sb-locations', 'Locations', '@sb_location_admin', 'sb-location-btn'),
