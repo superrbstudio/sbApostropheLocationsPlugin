@@ -5,13 +5,14 @@ class PluginsbLookupAddress
 	protected $address; // The address that will be used for queries and cache keys
 	protected $latitude;
 	protected $longitude;
-	protected $apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+	protected $apiUrl;
 	protected $useSensors = false; // Whether or not to use browser locations - probably not as this is server side!
 	protected $realAddress; // This is the real address returned from the API
 	protected $formattedAddress; // This is the formatted address as returned from the API
-	protected $cacheTime = '+1 month';
+	protected $cacheTime = '3 seconds';
 	protected $cache; // holder for the cache
 	protected $dataPulledFromCache = false;
+  protected $mapSystem; // the Mapping system to perform the lookup on
 	
 	static $cacheName = 'sb_lookup_address';
 
@@ -22,7 +23,6 @@ class PluginsbLookupAddress
 	 *  - address - The address to perform lookups on
 	 *  - latitude - A preset latitude
 	 *  - longitude - A preset longitude
-	 *  - api_url - The URL of the Google Maps API
 	 *  - use_sensors - Whether or not to use location sensors, normally no.
 	 */
 	public function __construct($params = array()) 
@@ -30,8 +30,20 @@ class PluginsbLookupAddress
 		if(isset($params['address'])) { $this->setAddress($params['address']); }
 		if(isset($params['latitude'])) { $this->setLatitude($params['latitude']); }
 		if(isset($params['longitude'])) { $this->setLongitude($params['longitude']); }
-		if(isset($params['api_url'])) { $this->setApiUrl($params['api_url']); }
 		if(isset($params['use_sensors'])) { $this->setUseSensors($params['use_sensors']); }
+    
+    $this->mapSystem = sfConfig::get('app_sbLocations_map_system', 'sbGoogleMap');
+    
+    switch($this->mapSystem)
+    {
+      case 'sbOpenStreetMap':
+        $this->setApiUrl('http://nominatim.openstreetmap.org/search');
+        break;
+      
+      default:
+        $this->setApiUrl('https://maps.googleapis.com/maps/api/geocode/json');
+    }
+    
 		$this->cache = aCacheTools::get(self::$cacheName);
 	}
 	
@@ -39,31 +51,59 @@ class PluginsbLookupAddress
 	{
 		if($this->getAddress() == '') { return false; }
 		if($this->getLookupFromCache()){ return true; }
-		$params = http_build_query(array('address' => $this->getAddress(), 'sensor' => $this->getUseSensorsAsString()));
-		$result = json_decode(file_get_contents(sfConfig::get('app_sbLocations_google_geocode_lookup_url') . '?' . $params));
-		$success = false;
+    
+    if($this->mapSystem == 'sbGoogleMap')
+    {
+      $params = http_build_query(array('address' => $this->getAddress(), 'sensor' => $this->getUseSensorsAsString()));
+      $result = json_decode(file_get_contents($this->getApiUrl() . '?' . $params));
+      $success = false;
 
-		if($result and $result->status == 'OK')
-		{
-			if(isset($result->results[0])) // default to first result
-			{
-				$address = $result->results[0];
-				
-				if(isset($address->formatted_address)){ $this->setFormattedAddress($address->formatted_address); }
-				if(isset($address->address_components)){ $this->setRealAddress($address->address_components); }
-				
-				if(isset($address->geometry->location))
-				{ 
-					$this->setLatitude($address->geometry->location->lat);
-					$this->setLongitude($address->geometry->location->lng);
-				}
-			}
-			
-			$this->setLocationToCache();
-			$success = true;
-		}
+      if($result and $result->status == 'OK')
+      {
+        if(isset($result->results[0])) // default to first result
+        {
+          $address = $result->results[0];
+
+          if(isset($address->formatted_address)){ $this->setFormattedAddress($address->formatted_address); }
+          if(isset($address->address_components)){ $this->setRealAddress($address->address_components); }
+
+          if(isset($address->geometry->location))
+          { 
+            $this->setLatitude(floatval($address->geometry->location->lat));
+            $this->setLongitude(floatval($address->geometry->location->lng));
+          }
+        }
+
+        $this->setLocationToCache();
+        $success = true;
+      }
 		
-		return $success;
+      return $success;
+    }
+    
+    if($this->mapSystem == 'sbOpenStreetMap')
+    {
+      $params = http_build_query(array('q' => $this->getAddress(), 'format' => 'json', 'addressdetails' => 1));
+      $result = json_decode(file_get_contents($this->getApiUrl() . '?' . $params));
+      $success = false;
+      
+      if($result != null and count($result) > 0)
+      {
+        $address = $result[0];
+        
+        if(isset($address->display_name)){ $this->setFormattedAddress($address->display_name); }
+        if(isset($address->address)){ $this->setRealAddress($address->address); }
+        if(isset($address->lat)){ $this->setLatitude(floatval($address->lat)); }
+        if(isset($address->lon)){ $this->setLongitude(floatval($address->lon)); }
+        
+        $this->setLocationToCache();
+        $success = true;
+      }
+
+      return $success;
+    }
+    
+    return false;
 	}
 	
 	/**
