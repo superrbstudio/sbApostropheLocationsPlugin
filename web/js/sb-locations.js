@@ -275,6 +275,7 @@ function sbLocationsLoadMap(markersUrl) {
 }
 
 var sbSingleLocationsMapLoads = {};
+var sbSingleLocationMaps = {};
 
 function sbSingleLocationMapSlot(params) {
   
@@ -300,7 +301,7 @@ function sbSingleLocationMapSlot(params) {
 	
 	if(params.mapSystem == 'sbGoogleMap') {
 		ctr = new google.maps.LatLng(lat, lon);
-		map = new google.maps.Map(document.getElementById(divId),{
+		sbSingleLocationMaps[divId] = new google.maps.Map(document.getElementById(divId),{
 			zoom : 13,
 			center : ctr,
 			mapTypeId : google.maps.MapTypeId.ROADMAP,
@@ -315,8 +316,18 @@ function sbSingleLocationMapSlot(params) {
 	
 		var marker = new google.maps.Marker({
 				position: myLatLng,
-				map: map
+				map: sbSingleLocationMaps[divId]
 		});
+    
+    if(params.description != '') {
+      var infowindow = new google.maps.InfoWindow({
+        content: $('<div>').html(params.description).text()
+      });
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(sbSingleLocationMaps[divId],marker);
+      });
+    }
 	
     sbSingleLocationsMapLoads[divId] = true;
 		return true;
@@ -324,32 +335,42 @@ function sbSingleLocationMapSlot(params) {
   
   if(params.mapSystem == 'sbOpenStreetMap') {
     
-    // set up or find the map
-    var map = new OpenLayers.Map(divId);
-    map.addLayer(new OpenLayers.Layer.OSM());
-    
-    // set up or find the markers
-    var markers = new OpenLayers.Layer.Markers("Markers");
-    map.addLayer(markers);
-    
-    // draw marker on map
-    var size = new OpenLayers.Size(21,25);
-    var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-    var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png',size,offset);
-    markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(lon,lat)
-          .transform(
-            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-            map.getProjectionObject() // to Spherical Mercator Projection
-          ),icon));
- 
-    //Set start centrepoint and zoom    
-    var lonLat = new OpenLayers.LonLat(lon,lat)
-          .transform(
-            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-            map.getProjectionObject() // to Spherical Mercator Projection
-          );
-    var zoom=13;
-    map.setCenter (lonLat, zoom);
+    // The overlay layer for our marker, with a simple diamond as symbol
+    var overlay = new OpenLayers.Layer.Vector('Overlay', {
+        styleMap: new OpenLayers.StyleMap({
+            externalGraphic: 'http://www.openlayers.org/dev/img/marker.png',
+            graphicWidth: 20, graphicHeight: 24, graphicYOffset: -24,
+            title: params.title
+        })
+    });
+
+    // The location of our marker and popup. We usually think in geographic
+    // coordinates ('EPSG:4326'), but the map is projected ('EPSG:3857').
+    var myLocation = new OpenLayers.Geometry.Point(lon, lat)
+        .transform('EPSG:4326', 'EPSG:3857');
+
+    // We add the marker with a tooltip text to the overlay
+    overlay.addFeatures([
+        new OpenLayers.Feature.Vector(myLocation, {tooltip: params.title})
+    ]);
+
+    // A popup with some information about our location
+    var popup = new OpenLayers.Popup.FramedCloud("Popup" + divId, 
+        myLocation.getBounds().getCenterLonLat(), null,
+        $('<div>').html(params.description).text(), null,
+        true // <-- true if we want a close (X) button, false otherwise
+    );
+
+    // Finally we create the map
+    sbSingleLocationMaps[divId] = new OpenLayers.Map({
+        div: divId, projection: "EPSG:3857",
+        layers: [new OpenLayers.Layer.OSM(), overlay],
+        center: myLocation.getBounds().getCenterLonLat(), zoom: 13
+    });
+    // and add the popup to it.
+    if(params.description != '') {
+      sbSingleLocationMaps[divId].addPopup(popup);
+    }
     
     sbSingleLocationsMapLoads[divId] = true;
     return true;

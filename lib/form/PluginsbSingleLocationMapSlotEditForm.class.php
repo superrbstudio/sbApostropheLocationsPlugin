@@ -47,6 +47,12 @@ class PluginsbSingleLocationMapSlotEditForm extends BaseForm
     
     $this->widgetSchema->setHelp('longitude', 'Latitude and Longitude will be calculated automatically for you');
     
+    $this->setWidget('title', new sfWidgetFormInputText());
+    $this->setValidator('title', new sfValidatorString(array('required' => false)));
+    
+    $this->setWidget('description', new aWidgetFormRichTextarea(array('tool' => 'Media')));
+    $this->setValidator('description', new sfValidatorHtml(array('required' => false)));
+    
     // Ensures unique IDs throughout the page. Hyphen between slot and form to please our CSS
     $this->widgetSchema->setNameFormat('slot-form-' . $this->id . '[%s]');
     

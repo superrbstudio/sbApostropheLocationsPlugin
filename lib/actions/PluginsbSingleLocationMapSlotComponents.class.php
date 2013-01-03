@@ -23,8 +23,11 @@ class PluginsbSingleLocationMapSlotComponents extends aSlotComponents
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
-    
     $this->mapSystem = sfConfig::get('app_sbLocations_map_system', 'sbGoogleMaps');
+    $this->latitude = '';
+    $this->longitude = '';
+    $this->description = '';
+    $this->title = '';
     
     switch($this->mapSystem)
   	{
@@ -36,5 +39,25 @@ class PluginsbSingleLocationMapSlotComponents extends aSlotComponents
 	  	  $this->getResponse()->addJavascript('http://www.openlayers.org/api/OpenLayers.js');
 	  	  break;
   	}
+    
+    if(isset($this->values['latitude']) and is_numeric($this->values['latitude']))
+    {
+      $this->latitude = $this->values['latitude'];
+    }
+    
+    if(isset($this->values['longitude']) and is_numeric($this->values['longitude']))
+    {
+      $this->longitude = $this->values['longitude'];
+    }
+    
+    if(isset($this->values['description']) and !empty($this->values['description']))
+    {
+      $this->description = $this->values['description'];
+    }
+    
+    if(isset($this->values['title']) and !empty($this->values['title']))
+    {
+      $this->title = $this->values['title'];
+    }
   }
 }
