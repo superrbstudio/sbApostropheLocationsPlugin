@@ -285,7 +285,7 @@ function sbSingleLocationMapSlot(params) {
     sbSingleLocationsMapLoads[divId] = true;
   });
   
-  console.log(divId + ' ' + sbSingleLocationsMapLoads[divId])
+  //console.log(divId + ' ' + sbSingleLocationsMapLoads[divId])
   
   if(sbSingleLocationsMapLoads[divId] == true) {sbSingleLocationsMapLoads[divId] = false; return false;}
   if($('#' + params.divId).length == 0) {return false;}
