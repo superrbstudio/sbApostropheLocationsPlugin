@@ -29,17 +29,6 @@ class PluginsbSingleLocationMapSlotComponents extends aSlotComponents
     $this->description = '';
     $this->title = '';
     
-    switch($this->mapSystem)
-  	{
-	  	case 'sbGoogleMap':
-	  		$this->getResponse()->addJavascript('https://maps.google.com/maps/api/js?sensor=false');
-	  		break;
-	  		
-	  	case 'sbOpenStreetMap':
-	  	  $this->getResponse()->addJavascript('http://www.openlayers.org/api/OpenLayers.js');
-	  	  break;
-  	}
-    
     if(isset($this->values['latitude']) and is_numeric($this->values['latitude']))
     {
       $this->latitude = $this->values['latitude'];

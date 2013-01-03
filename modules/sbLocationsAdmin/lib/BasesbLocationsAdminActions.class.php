@@ -44,20 +44,7 @@ class BasesbLocationsAdminActions extends autoSbLocationsAdminActions
   }
   
   public function executeEdit(sfWebRequest $request)
-  {
-  	$this->mapSystem = sfConfig::get('app_sbLocations_map_system', 'sbGoogleMap');
-  	
-  	switch($this->mapSystem)
-  	{
-	  	case 'sbGoogleMap':
-	  		$this->getResponse()->addJavascript('https://maps.google.com/maps/api/js?sensor=false');
-	  		break;
-	  		
-	  	case 'sbOpenStreetMap':
-	  	  $this->getResponse()->addJavascript('http://www.openlayers.org/api/OpenLayers.js');
-	  	  break;
-  	}
-  	
+  {	
     return parent::executeEdit($request);
   }
 }
