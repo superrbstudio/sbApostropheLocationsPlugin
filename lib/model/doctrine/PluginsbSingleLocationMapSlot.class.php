@@ -37,9 +37,14 @@ abstract class PluginsbSingleLocationMapSlot extends BasesbSingleLocationMapSlot
     {
       $values['longitude'] = $lookup->getLongitude();
       $values['latitude']  = $lookup->getLatitude();
-      $this->setArrayValue($values);
+    }
+    else
+    {
+      $values['longitude'] = '';
+      $values['latitude']  = '';
     }
     
+    $this->setArrayValue($values);
     parent::preSave($event);
   }
   
