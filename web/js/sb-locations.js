@@ -282,12 +282,12 @@ function sbSingleLocationMapSlot(params) {
   
   // detect if the edit button was clicked
   $(document).on('click', '.sbSingleLocationMap .a-btn.a-edit', function() {
-    sbSingleLocationsMapLoads.divId = true;
+    sbSingleLocationsMapLoads[divId] = true;
   });
   
-  //console.log(sbSingleLocationsMapLoads.divId)
+  console.log(divId + ' ' + sbSingleLocationsMapLoads[divId])
   
-  if(sbSingleLocationsMapLoads.divId == true) {sbSingleLocationsMapLoads.divId = false; return false;}
+  if(sbSingleLocationsMapLoads[divId] == true) {sbSingleLocationsMapLoads[divId] = false; return false;}
   if($('#' + params.divId).length == 0) {return false;}
 	
 	// do we use Google Maps or Open Street Maps
@@ -318,7 +318,7 @@ function sbSingleLocationMapSlot(params) {
 				map: map
 		});
 	
-    sbSingleLocationsMapLoads.divId = true;
+    sbSingleLocationsMapLoads[divId] = true;
 		return true;
 	}
   
@@ -351,7 +351,7 @@ function sbSingleLocationMapSlot(params) {
     var zoom=13;
     map.setCenter (lonLat, zoom);
     
-    sbSingleLocationsMapLoads.divId = true;
+    sbSingleLocationsMapLoads[divId] = true;
     return true;
   }
   
