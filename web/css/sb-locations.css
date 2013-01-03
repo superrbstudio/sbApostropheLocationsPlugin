@@ -123,3 +123,8 @@
 .sbLocationsAdmin .a-content, .sbLocationsAdmin .a-admin-content, .sbLocationsAdmin .a-admin-footer {
 	width: 100%;
 }
+
+.sbSingleLocationMap .sb-single-location-map-slot-map {
+  width: 100%;
+  height: 300px;
+}

@@ -273,3 +273,85 @@ function sbLocationsLoadMap(markersUrl) {
 
 	load_places(markersUrl);
 }
+
+var sbSingleLocationsMapLoads = {};
+
+function sbSingleLocationMapSlot(params) {
+  
+  var divId = params.divId;
+  
+  // detect if the edit button was clicked
+  $(document).on('click', '.sbSingleLocationMap .a-btn.a-edit', function() {
+    sbSingleLocationsMapLoads.divId = true;
+  });
+  
+  if(sbSingleLocationsMapLoads.divId == true) {sbSingleLocationsMapLoads.divId = false; return false;}
+  if($('#' + params.divId).length == 0) {return false;}
+	
+	// do we use Google Maps or Open Street Maps
+	if(params.mapSystem == undefined) { params.mapSystem = 'sbGoogleMap'; }
+  
+  // get the co-ordinates
+  lat = parseFloat(params.latitude);
+  lon = parseFloat(params.longitude);
+	if(isNaN(lat) || isNaN(lon)) {return false;}
+	
+	if(params.mapSystem == 'sbGoogleMap') {
+		ctr = new google.maps.LatLng(lat, lon);
+		map = new google.maps.Map(document.getElementById(divId),{
+			zoom : 13,
+			center : ctr,
+			mapTypeId : google.maps.MapTypeId.ROADMAP,
+			disableDefaultUI : false,
+			navigationControl : false,
+			navigationControlOptions : {
+				style : google.maps.NavigationControlStyle.SMALL
+			}
+		});
+	
+		var myLatLng = new google.maps.LatLng(lat,lon);
+	
+		var marker = new google.maps.Marker({
+				position: myLatLng,
+				map: map
+		});
+	
+    sbSingleLocationsMapLoads.divId = true;
+		return true;
+	}
+  
+  if(params.mapSystem == 'sbOpenStreetMap') {
+    
+    // set up or find the map
+    var map = new OpenLayers.Map(divId);
+    map.addLayer(new OpenLayers.Layer.OSM());
+    
+    // set up or find the markers
+    var markers = new OpenLayers.Layer.Markers("Markers");
+    map.addLayer(markers);
+    
+    // draw marker on map
+    var size = new OpenLayers.Size(21,25);
+    var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+    var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png',size,offset);
+    markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(lon,lat)
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+          ),icon));
+ 
+    //Set start centrepoint and zoom    
+    var lonLat = new OpenLayers.LonLat(lon,lat)
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+          );
+    var zoom=13;
+    map.setCenter (lonLat, zoom);
+    
+    sbSingleLocationsMapLoads.divId = true;
+    return true;
+  }
+  
+  return true;
+}
