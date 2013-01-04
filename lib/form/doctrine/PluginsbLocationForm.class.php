@@ -30,30 +30,31 @@ abstract class PluginsbLocationForm extends BasesbLocationForm
 		$this->setWidget('website_url', new sfWidgetFormInputText(array(), array('class' => 'large')));
 		$this->setValidator('website_url', new sfValidatorUrl(array('required' => false)));
 		
-		$this->setWidget('address_line1', new sfWidgetFormInputText(array(), array('class' => 'medium')));
+		$this->setWidget('address_line1', new sfWidgetFormInputText(array('label' => 'Line 1'), array('class' => 'medium')));
 		$this->setValidator('address_line1', new sfValidatorString(array('required' => false)));
 		
-		$this->setWidget('address_line2', new sfWidgetFormInputText(array(), array('class' => 'medium')));
+		$this->setWidget('address_line2', new sfWidgetFormInputText(array('label' => 'Line 2'), array('class' => 'medium')));
 		$this->setValidator('address_line2', new sfValidatorString(array('required' => false)));
 		
-		$this->setWidget('address_town_city', new sfWidgetFormInputText(array(), array('class' => 'medium')));
+		$this->setWidget('address_town_city', new sfWidgetFormInputText(array('label' => 'Town/City'), array('class' => 'medium')));
 		$this->setValidator('address_town_city', new sfValidatorString(array('required' => false)));
 		
-		$this->setWidget('address_county', new sfWidgetFormInputText(array(), array('class' => 'medium')));
+		$this->setWidget('address_county', new sfWidgetFormInputText(array('label' => 'County'), array('class' => 'medium')));
 		$this->setValidator('address_county', new sfValidatorString(array('required' => false)));
 		
-		$this->setWidget('address_state', new sfWidgetFormInputText(array(), array('class' => 'medium')));
+		$this->setWidget('address_state', new sfWidgetFormInputText(array('label' => 'State'), array('class' => 'medium')));
 		$this->setValidator('address_state', new sfValidatorString(array('required' => false)));
 		
-		$this->setWidget('address_country', new sfWidgetFormI18nChoiceCountry(array('default' => 'GB'), array('class' => 'medium')));
+		$this->setWidget('address_country', new sfWidgetFormI18nChoiceCountry(array('label' => 'Country', 'default' => 'GB'), array('class' => 'medium')));
 		$this->setValidator('address_country', new sfValidatorI18nChoiceCountry(array('required' => false)));
+    $this->setDefault('address_country', 'GB');
 		
-		$this->setWidget('address_postal_code', new sfWidgetFormInputText(array(), array('class' => 'small')));
+		$this->setWidget('address_postal_code', new sfWidgetFormInputText(array('label' => 'Postal Code'), array('class' => 'small')));
 		$this->setValidator('address_postal_code', new sfValidatorString(array('required' => false)));
 		
 		// Geocode - dont need to validate it will be automatically populated if anything is wrong
-		$this->setWidget('geocode_latitude', new sfWidgetFormInputText(array('label' => 'Lat:'), array()));
-		$this->setWidget('geocode_longitude', new sfWidgetFormInputText(array('label' => 'Lon:'), array()));
+		$this->setWidget('geocode_latitude', new sfWidgetFormInputText(array('label' => 'Lat:'), array('readonly' => 'readonly')));
+		$this->setWidget('geocode_longitude', new sfWidgetFormInputText(array('label' => 'Lon:'), array('readonly' => 'readonly')));
 		
 		// Tags
 		$options['default'] = implode(', ', $this->getObject()->getTags());
