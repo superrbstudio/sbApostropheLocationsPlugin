@@ -128,3 +128,7 @@
   width: 100%;
   height: 300px;
 }
+
+.a-ui .a-btn.sbsinglelocationmap.icon > .icon, .a-ui.a-btn.sbsinglelocationmap.icon > .icon {
+	background-position: -20px -420px;
+}
