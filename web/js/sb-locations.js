@@ -282,13 +282,13 @@ function sbSingleLocationMapSlot(params) {
   var divId = params.divId;
   
   // detect if the edit button was clicked
-  $(document).on('click', '.sbSingleLocationMap .a-btn.a-edit', function() {
+  /*$(document).on('click', '.sbSingleLocationMap .a-btn.a-edit', function() {
     sbSingleLocationsMapLoads[divId] = true;
-  });
+  });*/
   
   //console.log(divId + ' ' + sbSingleLocationsMapLoads[divId])
   
-  if(sbSingleLocationsMapLoads[divId] == true) {sbSingleLocationsMapLoads[divId] = false; return false;}
+  //if(sbSingleLocationsMapLoads[divId] == true) {sbSingleLocationsMapLoads[divId] = false; return false;}
   if($('#' + params.divId).length == 0) {return false;}
 	
 	// do we use Google Maps or Open Street Maps

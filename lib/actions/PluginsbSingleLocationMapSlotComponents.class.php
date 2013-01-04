@@ -29,7 +29,7 @@ class PluginsbSingleLocationMapSlotComponents extends aSlotComponents
     $this->description = '';
     $this->title = '';
     
-    switch($this->mapSystem)
+    /*switch($this->mapSystem)
   	{
 	  	case 'sbGoogleMap':
 	  		$this->getResponse()->addJavascript('https://maps.google.com/maps/api/js?sensor=false');
@@ -38,7 +38,7 @@ class PluginsbSingleLocationMapSlotComponents extends aSlotComponents
 	  	case 'sbOpenStreetMap':
 	  	  $this->getResponse()->addJavascript('http://www.openlayers.org/api/OpenLayers.js');
 	  	  break;
-  	}
+  	}*/
     
     if(isset($this->values['latitude']) and is_numeric($this->values['latitude']))
     {
