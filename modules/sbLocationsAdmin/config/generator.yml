@@ -14,12 +14,12 @@ generator:
     config:
       actions: ~
       fields:
+        active: { help: "Only active locations will appear on the website" }
         geocode_latitude: { label: Lat }
         geocode_longitude: { label: Lon }
-        address_town_city: { label: Town/City }
-        address_town_county: { label: County }
-        address_state: { label: State }
-        address_country: { label: Country }
+        address_town_city: { label: "Town/City" }
+        address_county: { label: "County" }
+        address_country: { label: "Country" }
         updated_at: { label: Last Updated }
       
       list:
@@ -41,7 +41,7 @@ generator:
       edit:
         title: "Edit %%title%%"
         display: 
-          Location Details: [ title, active, _descriptions ]
+          Location Details: [ title, active, categories_list, _descriptions ]
           Contact Details: [ telephone_landline, telephone_mobile, website_url ]
           Address: [ _address ]
           Tags: [ tags ]
@@ -50,7 +50,7 @@ generator:
       new:
         title: Add Location
         display: 
-          Location Details: [ title, active, _descriptions ]
+          Location Details: [ title, active, categories_list, _descriptions ]
           Contact Details: [ telephone_landline, telephone_mobile, website_url ]
           Address: [ _address ]
           Tags: [ tags ]

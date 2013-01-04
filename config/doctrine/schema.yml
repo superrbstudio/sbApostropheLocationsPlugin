@@ -65,12 +65,47 @@ sbLocation:
       refClass: sbLocationToASearchDocument
       foreign: a_search_document_id
       local: sb_location_id
+    Categories:
+      foreignAlias: sbLocations
+      class: aCategory
+      refClass: sbLocationToCategory
+      local: location_id
+      foreign: category_id
   indexes:
     active: { fields: active }
     author: { fields: author_id }
     county: { fields: address_county }
     state:  { fields: address_state }
     country: { fields: address_country }
+    
+sbLocationToCategory:
+  columns:
+    location_id:
+      type: integer
+      primary: true
+    category_id:
+      type: integer
+      primary: true
+  relations:
+    BlogItem:
+      foreignAlias: sbLocationCategories
+      class: sbLocation
+      local: location_id
+      onDelete: CASCADE
+    Category:
+      foreignAlias: sbLocationCategories
+      class: aCategory
+      local: category_id
+      onDelete: CASCADE
+      
+aCategory:
+  relations:
+    sbLocations:
+      foreignAlias: sbLocationCategories
+      class: sbLocation
+      refClass: sbLocationToCategory
+      local: category_id
+      foreign: location_id
 
 # Link to a search document
 sbLocationToASearchDocument:
@@ -95,6 +130,9 @@ sbLocationToASearchDocument:
     symfony:
       form:   false
       filter: false
+      
+      
+# Single Map Location Map Slot
 sbSingleLocationMapSlot:
   # Doctrine doesn't produce useful forms with column aggregation inheritance anyway,
   # and slots often use serialization into the value column... the Doctrine forms are not
