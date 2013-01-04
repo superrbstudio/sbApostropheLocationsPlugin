@@ -57,6 +57,8 @@
 				<div class="a-form-error"><?php echo $form['address_postal_code']->renderError(); ?></div>
 				<?php endif; ?>
 			</div>
+      
+      <div class="a-help">If you update the address, don't forget to click 'Find on map' to update map pin.</div>
 			
 		</td>
 		<td class="col2">
