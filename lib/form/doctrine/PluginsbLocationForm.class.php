@@ -14,6 +14,7 @@ abstract class PluginsbLocationForm extends BasesbLocationForm
 	{
 		parent::setup();
 		sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
+    $user = sfContext::getInstance()->getUser();
 		
 		$widgetOptions['tool'] = 'Sidebar';
 		
@@ -77,6 +78,23 @@ abstract class PluginsbLocationForm extends BasesbLocationForm
 				new sfValidatorDoctrineUnique(array('model' => $this->getModelName(), 'column' => 'title'))
 			))
 		);
+    
+    $q = Doctrine::getTable($this->getModelName())->addCategoriesForUser($user->getGuardUser(), $user->hasCredential('admin'));
+    $this->setWidget('categories_list',
+      new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => $this->getModelName(), 'query' => $q)));
+    $this->setValidator('categories_list',
+      new sfValidatorDoctrineChoice(array('multiple' => true, 'model' =>  $this->getModelName(), 'query' => $q, 'required' => false)));
+
+    if($user->hasCredential('admin'))
+    {
+      // Don't use a hidden field, an actual field will be output in that case and conflict
+      // with the DHTML-generated checkboxes when PHP goes to parse the result
+      $this->setWidget('categories_list_add',
+        new sfWidgetFormInputText());
+      //TODO: Make this validator better, should check for duplicate categories, etc.
+      $this->setValidator('categories_list_add',
+        new sfValidatorPass(array('required' => false)));
+    }
 		
 		unset($this['created_at'], $this['updated_at']);
 	}

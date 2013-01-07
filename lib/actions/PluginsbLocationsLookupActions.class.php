@@ -2,6 +2,13 @@
 
 abstract class PluginsbLocationsLookupActions extends BaseaActions
 {
+  /**
+   * I think this method isn't used any more
+   * It also doesn't support Open Street Maps
+   * 
+   * @param sfWebRequest $request
+   * @return sfView::NONE
+   */
 	public function executeLookup(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->getUser()->isAuthenticated());
@@ -43,7 +50,17 @@ abstract class PluginsbLocationsLookupActions extends BaseaActions
     $data = array();
     $this->getResponse()->setHttpHeader('Content-Type','application/json; charset=utf-8');
     
-    $locations = sbLocationTable::getInstance()->findByActive(true);
+    $result = Doctrine_Query::create()->from('sbLocation AS l');
+    
+    $categoryIds = $request->getParameter('categories', null);
+    
+    if(is_array($categoryIds) and count($categoryIds) > 0)
+    {
+      $result->innerJoin('l.Categories c WITH c.id IN (' . implode(',', $categoryIds) . ')');
+    }
+    
+    $locations = $result->execute(array(), Doctrine::HYDRATE_ARRAY);
+    
     $icons = sfConfig::get('app_sbLocations_maps_icons');
     
     foreach($locations as $location)

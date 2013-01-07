@@ -41,20 +41,20 @@
 				<div class="a-form-error"><?php echo $form['address_state']->renderError(); ?></div>
 				<?php endif; ?>
 			</div>
+      
+      <div class="a-form-row a-admin-text">
+				<?php echo $form['address_postal_code']->renderLabel(); ?>
+				<div class="a-form-field"><?php echo $form['address_postal_code']->render(); ?></div>
+				<?php if($form['address_postal_code']->hasError()): ?>
+				<div class="a-form-error"><?php echo $form['address_postal_code']->renderError(); ?></div>
+				<?php endif; ?>
+			</div>
 			
 			<div class="a-form-row a-admin-text">
 				<?php echo $form['address_country']->renderLabel(); ?>
 				<div class="a-form-field"><?php echo $form['address_country']->render(); ?></div>
 				<?php if($form['address_country']->hasError()): ?>
 				<div class="a-form-error"><?php echo $form['address_country']->renderError(); ?></div>
-				<?php endif; ?>
-			</div>
-			
-			<div class="a-form-row a-admin-text">
-				<?php echo $form['address_postal_code']->renderLabel(); ?>
-				<div class="a-form-field"><?php echo $form['address_postal_code']->render(); ?></div>
-				<?php if($form['address_postal_code']->hasError()): ?>
-				<div class="a-form-error"><?php echo $form['address_postal_code']->renderError(); ?></div>
 				<?php endif; ?>
 			</div>
       

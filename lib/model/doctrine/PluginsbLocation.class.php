@@ -99,7 +99,7 @@ abstract class PluginsbLocation extends BasesbLocation
 				break;
 			
 			case 'newline':
-				$address = implode('\r\n', $address);
+				$address = implode("\r\n", $address);
 				break;
 		}
 		
@@ -125,4 +125,19 @@ abstract class PluginsbLocation extends BasesbLocation
 	{
 		return sbLocationTable::getFirstImage($this);
 	}
+  
+  /**
+   * Returns a string of category names on new lines
+   */
+  public function displayCategories()
+  {
+    $string = array();
+    
+    foreach($this->getCategories() as $category)
+    {
+      $string[] = $category->getName();
+    }
+    
+    return implode("\r\n", $string);
+  }
 }
