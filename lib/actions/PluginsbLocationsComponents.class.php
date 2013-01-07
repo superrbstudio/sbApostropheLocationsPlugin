@@ -23,15 +23,18 @@ abstract class PluginsbLocationsComponents extends sfComponents
   
   public function executeDisplayMap(sfWebRequest $request)
   {
+    $this->markersUrl = url_for('@sb_locations_map_list') . '?';
     
     if(isset($this->categories))
     {
       $categories = http_build_query(array('categories' => $this->categories));
-      $this->markersUrl = url_for('@sb_locations_map_list') . '?' . $categories;
+      $this->markersUrl .= $categories;
     }
-    else
+    
+    if(isset($this->sbLocation))
     {
-      $this->markersUrl = url_for('@sb_locations_map_list');
+      $id = http_build_query(array('id' => $this->sbLocation['id']));
+      $this->markersUrl .= $id;
     }
   }
 }

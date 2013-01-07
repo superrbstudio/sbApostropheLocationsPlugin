@@ -53,10 +53,15 @@ abstract class PluginsbLocationsLookupActions extends BaseaActions
     $result = Doctrine_Query::create()->from('sbLocation AS l');
     
     $categoryIds = $request->getParameter('categories', null);
+    $sbLocationId = $request->getParameter('id', null);
     
-    if(is_array($categoryIds) and count($categoryIds) > 0)
+    if(is_array($categoryIds) and count($categoryIds) > 0 and !$sbLocationId)
     {
       $result->innerJoin('l.Categories c WITH c.id IN (' . implode(',', $categoryIds) . ')');
+    }
+    else if(is_numeric($sbLocationId))
+    {
+      $result->andWhere('l.id = ?', $sbLocationId);
     }
     
     $locations = $result->execute(array(), Doctrine::HYDRATE_ARRAY);
