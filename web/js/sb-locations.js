@@ -2,7 +2,7 @@
 var sbOpenStreetMapAdminMap;
 var sbOpenStreetMapAdminMarkers;
 
-function sbLocationsDrawAdminMap(mapSystem) {
+function sbLocationsDrawAdminMap(mapSystem, mapIcon) {
 	if($('#sb-location-admin-map').length == 0) {return false;}
 	
 	// do we use Google Maps or Open Street Maps
@@ -27,10 +27,24 @@ function sbLocationsDrawAdminMap(mapSystem) {
 		});
 	
 		var myLatLng = new google.maps.LatLng(lat,lon);
+    
+    var im = new google.maps.MarkerImage(mapIcon.icon.url,
+      new google.maps.Size(mapIcon.icon.size.one, mapIcon.icon.size.two),
+      new google.maps.Point(mapIcon.icon.point1.one, mapIcon.icon.point1.two),
+      new google.maps.Point(mapIcon.icon.point2.one, mapIcon.icon.point2.two)
+    );
+
+    var shadow = new google.maps.MarkerImage(mapIcon.shadow.url,
+      new google.maps.Size(mapIcon.shadow.size.one, mapIcon.shadow.size.two),
+      new google.maps.Point(mapIcon.shadow.point1.one, mapIcon.shadow.point1.two),
+      new google.maps.Point(mapIcon.shadow.point2.one, mapIcon.shadow.point2.two)
+    );
 	
 		var marker = new google.maps.Marker({
 				position: myLatLng,
-				map: map
+				map: map,
+        icon: im,
+        shadow: shadow
 		});
 	
 		return true;
@@ -155,7 +169,7 @@ function sbLocationsSubmitNewForm(form) {
 	return false;
 }
 
-function sbLocationsSetupEditMap(mapSystem) {
+function sbLocationsSetupEditMap(mapSystem, mapIcon) {
 	var addressLookup = '//' + window.location.hostname + '/sb-locations-lookup/address';
 	//sbLocationsSetLatLonDisplayValues();
 	
@@ -196,7 +210,7 @@ function sbLocationsSetupEditMap(mapSystem) {
 				$('#sb_location_geocode_latitude').val(parseFloat(data.results.latitude));
 				$('#sb_location_geocode_longitude').val(parseFloat(data.results.longitude));
 				//sbLocationsSetLatLonDisplayValues();
-				sbLocationsDrawAdminMap(mapSystem);
+				sbLocationsDrawAdminMap(mapSystem, mapIcon);
 			} else {
 				alert('Unable to find address');
 			}
@@ -209,7 +223,7 @@ function sbLocationsSetupEditMap(mapSystem) {
 	});
 	
 	// draw the map on load
-	sbLocationsDrawAdminMap(mapSystem);
+	sbLocationsDrawAdminMap(mapSystem, mapIcon);
 }
 
 function sbLocationsSetupFormChangeDetection() {
