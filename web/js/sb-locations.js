@@ -265,18 +265,23 @@ function sbLocationsLoadMap(markersUrl) {
             title : e.name,
             zIndex : n
         });
+        
+        if(e.description != '') {
+          var infowindow = new google.maps.InfoWindow({
+            content: e.description
+          });
 
-        var infowindow = new google.maps.InfoWindow({
-          content: e.description
-        });
-
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map,marker);
-        });
+          google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+          });
+        }
+        
         n++;
       });
-        
-      map.fitBounds(bounds);
+      
+      if(n > 1) {
+        map.fitBounds(bounds);
+      }
     });
   }
   
@@ -295,14 +300,6 @@ function sbSingleLocationMapSlot(params) {
   
   var divId = params.divId;
   
-  // detect if the edit button was clicked
-  /*$(document).on('click', '.sbSingleLocationMap .a-btn.a-edit', function() {
-    sbSingleLocationsMapLoads[divId] = true;
-  });*/
-  
-  //console.log(divId + ' ' + sbSingleLocationsMapLoads[divId])
-  
-  //if(sbSingleLocationsMapLoads[divId] == true) {sbSingleLocationsMapLoads[divId] = false; return false;}
   if($('#' + params.divId).length == 0) {return false;}
 	
 	// do we use Google Maps or Open Street Maps

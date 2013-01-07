@@ -72,7 +72,7 @@ abstract class PluginsbLocationsLookupActions extends BaseaActions
     {
       $da = array('id' => $location['id'],
                   'name' => $location['address_line1'], 
-                  'description' => html_entity_decode($this->getPartial('sbLocations/mapDescription', array('location' => $location))),
+                  'description' => html_entity_decode($this->getPartial('sbLocations/mapDescription', array('sbLocation' => $location))),
                   'lat' => $location['geocode_latitude'], 
                   'lng' => $location['geocode_longitude'],
                   'icon' => $icons['icon'], 
