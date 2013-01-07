@@ -242,6 +242,7 @@ function sbLocationsLoadMap(markersUrl) {
       var bounds = new google.maps.LatLngBounds();
       var myLatLng = null;
       $.each(data, function(k, e) {
+        var curPoint = e;
         myLatLng = new google.maps.LatLng(e.lat,e.lng);
         bounds.extend(myLatLng);
         
@@ -279,15 +280,17 @@ function sbLocationsLoadMap(markersUrl) {
         n++;
       });
       
-      if(n > 1) {
+      if(n > 2) {
         map.fitBounds(bounds);
+      } else {
+        map.setCenter(myLatLng);
       }
     });
   }
   
   map = new google.maps.Map(document.getElementById('sb-locations-map-container'),{
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
-    zoom: 7
+    zoom: 15
 	});
 
 	load_places(markersUrl);
