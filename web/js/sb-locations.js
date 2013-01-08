@@ -301,6 +301,8 @@ var sbSingleLocationMaps = {};
 
 function sbSingleLocationMapSlot(params) {
   
+  console.log(params);
+  
   var divId = params.divId;
   
   if($('#' + params.divId).length == 0) {return false;}
@@ -327,10 +329,24 @@ function sbSingleLocationMapSlot(params) {
 		});
 	
 		var myLatLng = new google.maps.LatLng(lat,lon);
+    
+    var im = new google.maps.MarkerImage(params.mapIcon.icon.url,
+      new google.maps.Size(params.mapIcon.icon.size.one, params.mapIcon.icon.size.two),
+      new google.maps.Point(params.mapIcon.icon.point1.one, params.mapIcon.icon.point1.two),
+      new google.maps.Point(params.mapIcon.icon.point2.one, params.mapIcon.icon.point2.two)
+    );
+
+    var shadow = new google.maps.MarkerImage(params.mapIcon.shadow.url,
+      new google.maps.Size(params.mapIcon.shadow.size.one, params.mapIcon.shadow.size.two),
+      new google.maps.Point(params.mapIcon.shadow.point1.one, params.mapIcon.shadow.point1.two),
+      new google.maps.Point(params.mapIcon.shadow.point2.one, params.mapIcon.shadow.point2.two)
+    );
 	
 		var marker = new google.maps.Marker({
 				position: myLatLng,
-				map: sbSingleLocationMaps[divId]
+				map: sbSingleLocationMaps[divId],
+        icon: im,
+        shadow: shadow
 		});
     
     if(params.description != '') {

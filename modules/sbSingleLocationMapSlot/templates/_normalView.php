@@ -8,6 +8,6 @@
 <?php else: ?>
 <p>Unable to find map location. Please check your address and try again.</p>
 <?php endif; ?>
-<?php a_js_call('sbSingleLocationMapSlot(?)', array('mapSystem' => sfConfig::get('app_sbLocations_map_system', 'sbGoogleMap'), 'latitude' => $latitude, 'longitude' => $longitude, 'divId' => 'sb-single-location-map-' . $permid, 'description' => $description)); ?>
+<?php a_js_call('sbSingleLocationMapSlot(?)', array('mapSystem' => sfConfig::get('app_sbLocations_map_system', 'sbGoogleMap'), 'latitude' => $latitude, 'longitude' => $longitude, 'divId' => 'sb-single-location-map-' . $permid, 'description' => $description, 'mapIcon' => sfConfig::get('app_sbLocations_maps_icons'))); ?>
 
 
