@@ -15,7 +15,8 @@ abstract class PluginsbLocationsActions extends aEngineActions
     
     $this->pager = new sfDoctrinePager('sbLocation');
     $this->pager->setMaxPerPage($this->max_per_page);
-    $this->pager->setPage($this->getRequestParameter('page', 1));
+    $this->currentPage = $this->getRequestParameter('page', 1);
+    $this->pager->setPage($this->currentPage);
     
     $result = Doctrine_Query::create()->from('sbLocation AS l');
     
