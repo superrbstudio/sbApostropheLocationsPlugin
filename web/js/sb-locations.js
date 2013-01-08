@@ -301,8 +301,6 @@ var sbSingleLocationMaps = {};
 
 function sbSingleLocationMapSlot(params) {
   
-  console.log(params);
-  
   var divId = params.divId;
   
   if($('#' + params.divId).length == 0) {return false;}
