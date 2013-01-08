@@ -13,6 +13,7 @@
 abstract class PluginsbLocation extends BasesbLocation
 {
   protected $engineSlug;
+  protected $virtualSlug;
   
   public function getSearchTitle()
   {
@@ -43,6 +44,27 @@ abstract class PluginsbLocation extends BasesbLocation
     }
 
     return $this->engineSlug;
+  }
+  
+  public function getVirtualSlug()
+  {
+    if (!isset($this->engineSlug))
+    {
+      $this->engineSlug = 'sb-location/' . $this->getSlug();
+    }
+
+    return $this->engineSlug;
+  }
+  
+  /**
+   * This function attempts to find the "best" engine to route a given location to.
+   * based on the categories that are used on various engine pages.
+   *
+   * @return aPage the best engine page
+   */
+  public function findBestEngine()
+  {
+    return Doctrine::getTable('aPage')->findOneBy('slug', $this->getEngineSlug());
   }
 
 	public function getSummary()
