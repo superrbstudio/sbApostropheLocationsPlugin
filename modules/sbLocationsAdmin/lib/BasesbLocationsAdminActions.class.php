@@ -60,4 +60,11 @@ class BasesbLocationsAdminActions extends autoSbLocationsAdminActions
   	
     return parent::executeEdit($request);
   }
+  
+  public function executeRedirect()
+  {
+    $sbLocation = $this->getRoute()->getObject();
+    aRouteTools::pushTargetEnginePage($sbLocation->findBestEngine());
+    $this->redirect($this->generateUrl('sb_location', $this->getRoute()->getObject()));
+  }
 }

@@ -33,7 +33,12 @@ abstract class PluginsbLocation extends BasesbLocation
   
   public function getSearchUrl()
   {
-    return $this->getEngineSlug() . '/' . $this->getSlug();
+    if(!is_numeric($this->getId()))
+    {
+      return null;
+    }
+    
+    return "@sb_location_redirect?id=" . $this->getId();
   }
   
   public function getEngineSlug()
@@ -76,25 +81,14 @@ abstract class PluginsbLocation extends BasesbLocation
 	{
 		parent::postSave($event);
 
-		/*aTools::$searchService->update(
-			array(
-				'item' => $this,
-				'text' => $this->getSearchText(),
-				'info' => array('summary' => $this->getSummary()),
-				'culture' => aTools::getUserCulture()));*/
-    
-    Doctrine::getTable('aPage')->mirrorForSearch($this);
-	}
-
-	public function postDelete($event)
-	{
-		parent::postDelete($event);
-
-		/*aTools::$searchService->delete(
-			array(
-				'item' => $this
-			)
-		);*/
+    if($this->getActive())
+    {
+      Doctrine::getTable('aPage')->mirrorForSearch($this);
+    }
+    else
+    {
+      Doctrine::getTable('aPage')->deleteSearchMirror($this);
+    }
 	}
   
   public function preDelete($event)
