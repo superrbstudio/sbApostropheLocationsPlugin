@@ -12,6 +12,13 @@
  */
 abstract class PluginsbLocation extends BasesbLocation
 {
+  protected $engineSlug;
+  
+  public function getSearchTitle()
+  {
+    return $this->getTitle();
+  }
+  
 	public function getSearchText()
 	{
 		return $this->getTitle() . " " . 
@@ -22,6 +29,21 @@ abstract class PluginsbLocation extends BasesbLocation
 						$this->getTelephoneMobile() . " " . 
 						implode(' ', $this->getTags());
 	}
+  
+  public function getSearchUrl()
+  {
+    return $this->getEngineSlug() . '/' . $this->getSlug();
+  }
+  
+  public function getEngineSlug()
+  {    
+    if (!isset($this->engineSlug))
+    {
+      $this->engineSlug = aEngineTools::getEngineSlug($this);
+    }
+
+    return $this->engineSlug;
+  }
 
 	public function getSummary()
 	{
@@ -32,24 +54,33 @@ abstract class PluginsbLocation extends BasesbLocation
 	{
 		parent::postSave($event);
 
-		aTools::$searchService->update(
+		/*aTools::$searchService->update(
 			array(
 				'item' => $this,
 				'text' => $this->getSearchText(),
 				'info' => array('summary' => $this->getSummary()),
-				'culture' => aTools::getUserCulture()));
+				'culture' => aTools::getUserCulture()));*/
+    
+    Doctrine::getTable('aPage')->mirrorForSearch($this);
 	}
 
 	public function postDelete($event)
 	{
 		parent::postDelete($event);
 
-		aTools::$searchService->delete(
+		/*aTools::$searchService->delete(
 			array(
 				'item' => $this
 			)
-		);
+		);*/
 	}
+  
+  public function preDelete($event)
+  {
+    parent::preDelete($event);
+    
+    Doctrine::getTable('aPage')->deleteSearchMirror($this);
+  }
 	
 	/**
 	 * Add in a co-ordinate lookup before saving

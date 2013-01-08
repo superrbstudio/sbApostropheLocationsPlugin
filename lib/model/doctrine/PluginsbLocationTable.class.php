@@ -129,4 +129,9 @@ class PluginsbLocationTable extends Doctrine_Table
     cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
   return $angle * $earthRadius;
   }
+  
+  public function getEngineCategories()
+  {
+    return aEngineTools::getEngineCategories('sbLocations');
+  }
 }
