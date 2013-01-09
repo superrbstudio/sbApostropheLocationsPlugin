@@ -1,4 +1,9 @@
 <?php $pagerUrl = url_for('sbLocations/index'); ?>
+<?php $proximitySearchForm = isset($proximitySearchForm) ? $sf_data->getRaw('proximitySearchForm') : new sbLocationProximitySearchForm(); ?>
+<?php if($proximitySearchForm->isValid()): ?>
+<?php $urlParts['proximity'] = $proximitySearchForm->getValues(); ?>
+<?php $pagerUrl .= '?' . http_build_query($urlParts); ?>
+<?php endif; ?>
 
 <?php include_partial('sbLocations/proximitySearch', array('proximitySearchForm' => $proximitySearchForm, 'page' => $page)); ?>
 
