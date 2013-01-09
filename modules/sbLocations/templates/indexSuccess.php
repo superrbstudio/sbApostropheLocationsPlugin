@@ -1,5 +1,7 @@
 <?php $pagerUrl = url_for('sbLocations/index'); ?>
 
+<?php include_partial('sbLocations/proximitySearch', array('proximitySearchForm' => $proximitySearchForm, 'page' => $page)); ?>
+
 <?php if ($pager->haveToPaginate()): ?>
   	 <?php include_partial('aPager/pager', array('pager' => $pager, 'pagerUrl' => $pagerUrl)) ?>
   <?php endif ?>
