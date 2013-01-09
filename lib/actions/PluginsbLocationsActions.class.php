@@ -73,5 +73,6 @@ abstract class PluginsbLocationsActions extends aEngineActions
     $prefix = aTools::getOptionI18n('title_prefix');
     $suffix = aTools::getOptionI18n('title_suffix');
     $this->getResponse()->setTitle($prefix . $this->sbLocation->getTitle() . $suffix, false);
+    $this->getResponse()->addMeta('description', strip_tags($this->sbLocation->getDescription()));
   }
 }
