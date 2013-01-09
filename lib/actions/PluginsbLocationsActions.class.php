@@ -19,14 +19,51 @@ abstract class PluginsbLocationsActions extends aEngineActions
     $this->pager->setPage($this->currentPage);
     
     $result = Doctrine_Query::create()->from('sbLocation AS l');
+    $result->select('l.*');
     
     if(!empty($this->categoryIds) and count($this->categoryIds) > 0)
     {
+      $result->addSelect('c.*');
       $result->innerJoin('l.Categories c WITH c.id IN (' . implode(',', $this->categoryIds) . ')');
     }
     
+    // do we do proximity
+    $this->proximitySearchTerm = $request->getParameter('proximity', null);
+    $this->proximitySearchForm = new sbLocationProximitySearchForm();
+    $orderSet = false;
+    
+    if(!is_null($this->proximitySearchTerm))
+    {
+      $this->proximitySearchForm->bind($this->proximitySearchTerm);
+      
+      if($this->proximitySearchForm->isValid())
+      {
+        $lookupAddress = new sbLookupAddress(array('address' => $this->proximitySearchForm->getValue('search') . ',GB'));
+        
+        if($lookupAddress->lookupGeolocationFromAddress())
+        {
+          $result->addSelect("(((acos(sin((".$lookupAddress->getLatitude()."*pi()/180)) * sin((l.geocode_latitude*pi()/180))+cos((".$lookupAddress->getLatitude()."*pi()/180)) * cos((l.geocode_latitude*pi()/180)) * cos(((".$lookupAddress->getLongitude()."- l.geocode_longitude)*pi()/180))))*180/pi())*60*1.1515) as distance");
+          
+          $units = sbLocationTable::getUnit();
+          
+          if($units->abbr == 'km') // we must convert to miles for this equation to work
+          {
+            $distance = sbLocationTable::convertKilometersToMiles($this->proximitySearchForm->getValue('distance'));
+          }
+          else
+          {
+            $distance = $this->proximitySearchForm->getValue('distance');
+          }
+          
+          $result->having('distance <= ?', $distance);
+          $result->orderBy('distance');
+          $orderSet = true;
+        } 
+      }
+    }
+    
     $result->andWhere('active = 1');
-    $result->orderBy('l.title');
+    if(!$orderSet) { $result->orderBy('l.title'); }
     $this->pager->setQuery($result);
     $this->pager->init();
   }
