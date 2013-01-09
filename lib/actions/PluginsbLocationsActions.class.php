@@ -11,7 +11,7 @@ abstract class PluginsbLocationsActions extends aEngineActions
   {
     $this->categoryIds  = aArray::getIds($this->page->Categories);
     $this->max_per_page = sfConfig::get('app_sbLocations_max_per_page', 20);
-    $this->pagerUrl     = 
+    $this->unit         = sbLocationTable::getUnit();
     
     $this->pager = new sfDoctrinePager('sbLocation');
     $this->pager->setMaxPerPage($this->max_per_page);
@@ -42,20 +42,16 @@ abstract class PluginsbLocationsActions extends aEngineActions
         
         if($lookupAddress->lookupGeolocationFromAddress())
         {
-          $result->addSelect("(((acos(sin((".$lookupAddress->getLatitude()."*pi()/180)) * sin((l.geocode_latitude*pi()/180))+cos((".$lookupAddress->getLatitude()."*pi()/180)) * cos((l.geocode_latitude*pi()/180)) * cos(((".$lookupAddress->getLongitude()."- l.geocode_longitude)*pi()/180))))*180/pi())*60*1.1515) as distance");
-          
-          $units = sbLocationTable::getUnit();
-          
-          if($units->abbr == 'km') // we must convert to miles for this equation to work
+          if($this->unit->abbr == 'miles')
           {
-            $distance = sbLocationTable::convertKilometersToMiles($this->proximitySearchForm->getValue('distance'));
+            $result->addSelect("(((acos(sin((".$lookupAddress->getLatitude()."*pi()/180)) * sin((l.geocode_latitude*pi()/180))+cos((".$lookupAddress->getLatitude()."*pi()/180)) * cos((l.geocode_latitude*pi()/180)) * cos(((".$lookupAddress->getLongitude()."- l.geocode_longitude)*pi()/180))))*180/pi())*60*1.1515) as distance");
           }
           else
           {
-            $distance = $this->proximitySearchForm->getValue('distance');
+            $result->addSelect("((((acos(sin((".$lookupAddress->getLatitude()."*pi()/180)) * sin((l.geocode_latitude*pi()/180))+cos((".$lookupAddress->getLatitude()."*pi()/180)) * cos((l.geocode_latitude*pi()/180)) * cos(((".$lookupAddress->getLongitude()."- l.geocode_longitude)*pi()/180))))*180/pi())*60*1.1515)*1.609344) as distance");
           }
           
-          $result->having('distance <= ?', $distance);
+          $result->having('distance <= ?', $this->proximitySearchForm->getValue('distance'));
           $result->orderBy('distance');
           $orderSet = true;
         } 
