@@ -51,9 +51,11 @@ abstract class PluginsbLocationsLookupActions extends BaseaActions
     $this->getResponse()->setHttpHeader('Content-Type','application/json; charset=utf-8');
     
     $result = Doctrine_Query::create()->from('sbLocation AS l');
+    $result->select('l.*');
     
-    $categoryIds = $request->getParameter('categories', null);
+    $categoryIds  = $request->getParameter('categories', null);
     $sbLocationId = $request->getParameter('id', null);
+    $proximity    = $request->getParameter('proximity', null);
     
     if(is_array($categoryIds) and count($categoryIds) > 0 and !$sbLocationId)
     {
@@ -62,6 +64,35 @@ abstract class PluginsbLocationsLookupActions extends BaseaActions
     else if(is_numeric($sbLocationId))
     {
       $result->andWhere('l.id = ?', $sbLocationId);
+    }
+    
+    if(!is_null($proximity))
+    {
+      $this->proximitySearchForm = new sbLocationProximitySearchForm();
+      $this->proximitySearchForm->bind($proximity);
+      
+      if($this->proximitySearchForm->isValid())
+      {
+        $lookupAddress = new sbLookupAddress(array('address' => $this->proximitySearchForm->getValue('search') . ',GB'));
+        
+        if($lookupAddress->lookupGeolocationFromAddress())
+        {
+          $result->addSelect("(((acos(sin((".$lookupAddress->getLatitude()."*pi()/180)) * sin((l.geocode_latitude*pi()/180))+cos((".$lookupAddress->getLatitude()."*pi()/180)) * cos((l.geocode_latitude*pi()/180)) * cos(((".$lookupAddress->getLongitude()."- l.geocode_longitude)*pi()/180))))*180/pi())*60*1.1515) as distance");
+          
+          $units = sbLocationTable::getUnit();
+          
+          if($units->abbr == 'km') // we must convert to miles for this equation to work
+          {
+            $distance = sbLocationTable::convertKilometersToMiles($this->proximitySearchForm->getValue('distance'));
+          }
+          else
+          {
+            $distance = $this->proximitySearchForm->getValue('distance');
+          }
+          
+          $result->having('distance <= ?', $distance);
+        } 
+      }
     }
     
     $locations = $result->execute(array(), Doctrine::HYDRATE_ARRAY);
