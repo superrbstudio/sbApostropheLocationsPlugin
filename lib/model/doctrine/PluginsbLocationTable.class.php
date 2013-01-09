@@ -117,21 +117,44 @@ class PluginsbLocationTable extends Doctrine_Table
   public static function vincentyGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
   {
     // convert from degrees to radians
-  $latFrom = deg2rad($latitudeFrom);
-  $lonFrom = deg2rad($longitudeFrom);
-  $latTo = deg2rad($latitudeTo);
-  $lonTo = deg2rad($longitudeTo);
+    $latFrom = deg2rad($latitudeFrom);
+    $lonFrom = deg2rad($longitudeFrom);
+    $latTo = deg2rad($latitudeTo);
+    $lonTo = deg2rad($longitudeTo);
 
-  $latDelta = $latTo - $latFrom;
-  $lonDelta = $lonTo - $lonFrom;
+    $latDelta = $latTo - $latFrom;
+    $lonDelta = $lonTo - $lonFrom;
 
-  $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
-    cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-  return $angle * $earthRadius;
+    $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+    return $angle * $earthRadius;
   }
   
   public function getEngineCategories()
   {
     return aEngineTools::getEngineCategories('sbLocations');
+  }
+  
+  public static function getUnit()
+  {
+    $units = new stdClass();
+    $units->name = 'Kilometers';
+    $units->abbr = 'km';
+    
+    $unit = sfConfig::get('app_sbLocations_units', 'kilometers');
+    
+    switch($unit)
+    {
+      case 'miles':
+        $units->name = 'Miles';
+        $units->abbr = 'miles';
+        break;
+    }
+    
+    return $units;
+  }
+  
+  public static function convertKilometersToMiles($kilometers)
+  {
+    return floatval($kilometers) * 0.621371192;
   }
 }
