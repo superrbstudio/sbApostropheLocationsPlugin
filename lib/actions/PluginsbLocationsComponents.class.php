@@ -40,6 +40,11 @@ abstract class PluginsbLocationsComponents extends sfComponents
       $httpQuery['engine_slug'] = $this->engineSlug;
     }
     
+    if(isset($this->proximitySearchForm) and $this->proximitySearchForm->isValid())
+    {
+      $httpQuery['proximity'] = array('search' => $this->proximitySearchForm->getValue('search'), 'distance' => $this->proximitySearchForm->getValue('distance'));
+    }
+    
     $this->markersUrl = url_for('@sb_locations_map_list') . '?' . http_build_query($httpQuery);
   }
 }
