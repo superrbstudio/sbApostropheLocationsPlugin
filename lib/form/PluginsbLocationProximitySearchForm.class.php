@@ -31,11 +31,11 @@ class PluginsbLocationProximitySearchForm extends sfForm
     {
       $unit = sbLocationTable::getUnit();
       $this->distanceChoices = array(
-          1 => '1' . $unit->abbr, 
-          5 => '5' . $unit->abbr . 's', 
-          10 => '10' . $unit->abbr . 's', 
-          25 => '25' . $unit->abbr . 's',
-          50 => '50' . $unit->abbr . 's'
+          1 => '1 ' . $unit->abbr, 
+          5 => '5 ' . $unit->abbr, 
+          10 => '10 ' . $unit->abbr, 
+          25 => '25 ' . $unit->abbr,
+          50 => '50 ' . $unit->abbr
       );
     }
     
