@@ -126,7 +126,16 @@ class PluginsbLocationTable extends Doctrine_Table
     $lonDelta = $lonTo - $lonFrom;
 
     $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-    return $angle * $earthRadius;
+    $meters = $angle * $earthRadius;
+    
+    $unit = self::getUnit();
+    
+    if($unit->abbr == 'miles')
+    {
+      return self::convertKilometersToMiles($meters / 1000);
+    }
+    
+    return $meters / 1000;
   }
   
   public function getEngineCategories()
@@ -156,5 +165,10 @@ class PluginsbLocationTable extends Doctrine_Table
   public static function convertKilometersToMiles($kilometers)
   {
     return floatval($kilometers) * 0.621371192;
+  }
+  
+  public static function convertMilesToKilometers($miles)
+  {
+    return floatval($miles) * 1.609344;
   }
 }
