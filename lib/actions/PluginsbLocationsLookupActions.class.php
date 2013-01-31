@@ -99,7 +99,7 @@ abstract class PluginsbLocationsLookupActions extends BaseaActions
     foreach($locations as $location)
     {
       $da = array('id' => $location['id'],
-                  'name' => $location['address_line1'], 
+                  'name' => $location['title'], 
                   'description' => html_entity_decode($this->getPartial('sbLocations/mapDescription', array('sbLocation' => $location, 'engineSlug' => $request->getParameter('engine_slug', null)))),
                   'lat' => $location['geocode_latitude'], 
                   'lng' => $location['geocode_longitude'],
