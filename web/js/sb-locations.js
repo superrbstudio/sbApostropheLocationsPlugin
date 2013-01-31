@@ -290,7 +290,8 @@ function sbLocationsLoadMap(markersUrl) {
   
   map = new google.maps.Map(document.getElementById('sb-locations-map-container'),{
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
-    zoom: 15
+        zoom: 15,
+        scrollwheel: false
 	});
 
 	load_places(markersUrl);
