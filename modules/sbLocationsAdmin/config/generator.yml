@@ -39,7 +39,7 @@ generator:
       form:    ~
       
       edit:
-        title: "Edit %%title%%"
+        title: "Edit Location"
         display: 
           Location Details: [ title, active, categories_list, _descriptions ]
           Contact Details: [ telephone_landline, telephone_mobile, website_url, email_address ]
