@@ -42,7 +42,7 @@ generator:
         title: "Edit Location"
         display: 
           Location Details: [ title, active, categories_list, _descriptions ]
-          Contact Details: [ telephone_landline, telephone_mobile, website_url, email_address ]
+          Contact Details: [ telephone_landline, telephone_mobile, website_url ]
           Address: [ _address ]
           Tags: [ tags ]
           
@@ -51,6 +51,6 @@ generator:
         title: Add Location
         display: 
           Location Details: [ title, active, categories_list, _descriptions ]
-          Contact Details: [ telephone_landline, telephone_mobile, website_url, email_address ]
+          Contact Details: [ telephone_landline, telephone_mobile, website_url ]
           Address: [ _address ]
           Tags: [ tags ]
