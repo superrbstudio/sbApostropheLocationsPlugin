@@ -193,9 +193,9 @@ function sbLocationsSetupEditMap(mapSystem, mapIcon) {
 			address = address + ', ' + $('#sb_location_address_county').val();
 		}
 		
-		if($('#sb_location_address_state').val() != '') {
-			address = address + ', ' + $('#sb_location_address_state').val();
-		}
+		// if($('#sb_location_address_state').val() != '') {
+		// 	address = address + ', ' + $('#sb_location_address_state').val();
+		// }
 		
 		if($('#sb_location_address_postal_code').val() != '') {
 			address = address + ', ' + $('#sb_location_address_postal_code').val();

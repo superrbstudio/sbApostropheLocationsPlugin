@@ -50,7 +50,7 @@ class BasesbLocationsAdminActions extends autoSbLocationsAdminActions
   	switch($this->mapSystem)
   	{
 	  	case 'sbGoogleMap':
-	  		$this->getResponse()->addJavascript('https://maps.google.com/maps/api/js?sensor=false');
+//	  		$this->getResponse()->addJavascript('https://maps.google.com/maps/api/js?sensor=false');
 	  		break;
 	  		
 	  	case 'sbOpenStreetMap':

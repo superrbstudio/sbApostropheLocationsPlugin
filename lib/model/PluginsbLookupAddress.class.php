@@ -54,7 +54,8 @@ class PluginsbLookupAddress
     
     if($this->mapSystem == 'sbGoogleMap')
     {
-      $params = http_build_query(array('address' => $this->getAddress(), 'sensor' => $this->getUseSensorsAsString()));
+      $params = http_build_query(array('address' => $this->getAddress(), 'sensor' => $this->getUseSensorsAsString(), 'key' => 'AIzaSyCafzr3w-p6dj6VNlXHErUNNjoQl_2Oho8'));
+
       $result = json_decode(file_get_contents($this->getApiUrl() . '?' . $params));
       $success = false;
 
